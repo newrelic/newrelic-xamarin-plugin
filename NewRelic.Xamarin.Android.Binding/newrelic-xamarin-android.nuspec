@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>NewRelicTest.Android.XamarinBinding</id>
+    <version>1.0.1</version>
+    <authors>newrelic</authors>
+    <owners>newrelic</owners>
+    <projectUrl>https://github.com/newrelic/newrelic-react-native-agent</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <title>NewRelic Android SDK</title>
+    <summary>NewRelic Android SDK binding for Xamarin iOS</summary>
+    <description>With NewRelic, you can collect crashes, network traffic, and other information for Xamarin Android apps using native components.</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2023</copyright>
+    <tags>newrelic xamarin android</tags>
+    <dependencies>
+      <dependency id="Xamarin.ReLinker" version="1.4.4" />
+    </dependencies>
+  </metadata>
+  <files>
+      <file src="bin/Release/android_agent.dll" target="lib/MonoAndroid11/android_agent.dll" />
+  </files>
+</package>

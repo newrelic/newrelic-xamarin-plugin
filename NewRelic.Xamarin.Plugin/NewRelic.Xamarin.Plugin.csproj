@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="MSBuild.Sdk.Extras/3.0.44">
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;MonoAndroid10.0;Xamarin.iOS10;</TargetFrameworks>
+		<AssemblyName>Plugin.NewRelicClient</AssemblyName>
+		<RootNamespace>Plugin.NewRelicClient</RootNamespace>
+		<PackageId>Plugin.NewRelicClient</PackageId>
+		<Product>$(AssemblyName) ($(TargetFramework))</Product>
+		<AssemblyVersion>2.0.0.28</AssemblyVersion>
+		<AssemblyFileVersion>2.0.0.28</AssemblyFileVersion>
+		<Version>2.0.0.28</Version>
+		<PackOnBuild>true</PackOnBuild>
+		<NeutralLanguage>en</NeutralLanguage>
+		<LangVersion>default</LangVersion>
+		<DefineConstants>$(DefineConstants);</DefineConstants>
+		<UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+		<LangVersion>latest</LangVersion>
+		<license>
+		</license>
+		<PackageProjectUrl>
+		</PackageProjectUrl>
+		<RepositoryUrl>
+		</RepositoryUrl>
+		<PackageTags>xamarin, ios, android, xamarin.forms,newrlic </PackageTags>
+		<Title>NewRelic Plugin for Xamarin</Title>
+		<Summary>NewRelic Plugin handling across Xamarin.iOS and Xamarin.Android</Summary>
+		<Description>NewRelic Plugin handling across Xamarin.iOS and Xamarin.Android</Description>
+		<Authors>NewRelic Inc.</Authors>
+		<Copyright>Copyright 2023</Copyright>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+	<!-- Define what happens on build and release -->
+	<PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+		<GenerateDocumentationFile>false</GenerateDocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)'=='Release' ">
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<DebugType>pdbonly</DebugType>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup>
+		<NoWarn>1701;1702;1591</NoWarn>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Plugin.NewRelicClient.xml</DocumentationFile>
+		<Company>NewRelic</Company>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Include="**\*.shared.cs" />
+		<Compile Include="**\*.shared.*.cs" />
+	</ItemGroup>
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
+	</ItemGroup>
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+		<PackageReference Include="NewRelicTest.Android.XamarinBinding" Version="1.0.1" />
+		<Compile Include="**\*.android.cs" />
+		<Compile Include="**\*.android.*.cs" />
+	</ItemGroup>
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+		<PackageReference Include="NewRelicTest.iOS.XamarinBinding" Version="2.0.14" />
+		<Compile Include="**\*.apple.cs" />
+		<Compile Include="**\*.apple.*.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="Mono.Android" />
+		<None Remove="Xamarin.Forms" />
+	</ItemGroup>
+</Project>

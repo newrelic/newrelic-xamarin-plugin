@@ -1,0 +1,18 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Target Name="NewRelicCopyResourcesWithXCFramework" BeforeTargets="BeforeCompile" Condition="'$(TargetFrameworkIdentifier)' == 'Xamarin.iOS'">
+        <ItemGroup>
+            <BindingResources Include="$(MSBuildThisFileDirectory)../content/NewRelic.iOS.resources/**/*.*" />
+        </ItemGroup>
+        <Copy SourceFiles="@(BindingResources)" DestinationFolder="$(TargetDir)/NewRelic.iOS.resources/%(RecursiveDir)" ContinueOnError="false" />
+        <ItemGroup>
+            <NativeReference Include="$(TargetDir)/NewRelic.iOS.resources\NewRelic.xcframework">
+                <Kind>Framework</Kind>
+                <SmartLink>True</SmartLink>
+                <ForceLoad>True</ForceLoad>
+                <IsCxx>True</IsCxx>
+                <LinkerFlags>-ObjC -lc++ -lz</LinkerFlags>
+                <Frameworks>UIKit SystemConfiguration, CoreTelephony</Frameworks>
+            </NativeReference>
+        </ItemGroup>
+    </Target>
+</Project>
