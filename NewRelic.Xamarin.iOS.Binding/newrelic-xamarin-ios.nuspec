@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>NewRelicTest.iOS.XamarinBinding</id>
+    <version>2.0.14</version>
+    <authors>newrelic</authors>
+    <owners>newrelic</owners>
+    <projectUrl>https://github.com/newrelic/newrelic-react-native-agent</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <title>NewRelic iOS SDK</title>
+    <summary>NewRelic iOS SDK binding for Xamarin iOS</summary>
+    <description>With NewRelic, you can collect crashes, network traffic, and other information for Xamarin iOS apps using native components.</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2023</copyright>
+    <tags>newrelic xamarin</tags>
+    <dependencies>
+      <group targetFramework="xamarin.ios10">
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+      <file src="bin/Release/NewRelic.iOS.dll" target="lib/Xamarin.iOS10/NewRelic.iOS.dll" />
+      <file src="bin/Release/NewRelic.iOS.dll" target="lib/net6.0-ios15.4/NewRelic.iOS.dll" />
+      <file src="bin/Release/NewRelic.iOS.resources/**" target="content/NewRelic.iOS.resources" />
+      <file src="NewRelicTest.iOS.XamarinBinding.targets" target="build/NewRelicTest.iOS.XamarinBinding.targets" />
+  </files>
+</package> 
