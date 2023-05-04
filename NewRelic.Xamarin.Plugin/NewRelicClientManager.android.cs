@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2023-present New Relic Corporation. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0 
+ */
+
 using System;
 using System.Threading.Tasks;
 using System.Linq;
@@ -54,6 +59,8 @@ namespace Plugin.NewRelicClient
                 .WithApplicationFramework(Com.Newrelic.Agent.Android.ApplicationFramework.Xamarin, "1.0.0")
                 .WithCrashReportingEnabled(false)
                 .Start(Android.App.Application.Context);
+            NRAndroidAgent.
+            Com.Newrelic.Agent.Android.Background.ApplicationStateMonitor.Instance.ActivityStarted();
             isStarted = true;
         }
 

@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2023-present New Relic Corporation. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0 
+ */
+
+using System;
 namespace Plugin.NewRelicClient
 {
     /// <summary>
