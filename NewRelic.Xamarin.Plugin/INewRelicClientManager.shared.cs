@@ -16,7 +16,7 @@ namespace Plugin.NewRelicClient
     public interface INewRelicClientManager
     {
 
-        void Start(string applicationToken);
+        void Start(string applicationToken, AgentStartConfiguration agentConfig = null);
 
         void CrashNow(string message = "");
 

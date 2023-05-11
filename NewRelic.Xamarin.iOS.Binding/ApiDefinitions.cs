@@ -162,6 +162,11 @@ namespace NewRelicXamarinIOS
 		[Export ("setPlatform:")]
 		void SetPlatform (NRMAApplicationPlatform platform);
 
+		// +(void)setPlatformVersion:(NSString * _Nonnull)platformVersion;
+		[Static]
+		[Export("setPlatformVersion:")]
+		void SetPlatformVersion(string platformVersion);
+
 		// +(NSString * _Null_unspecified)currentSessionId;
 		[Static]
 		[Export ("currentSessionId")]

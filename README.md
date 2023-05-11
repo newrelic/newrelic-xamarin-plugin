@@ -46,12 +46,18 @@ using Plugin.NewRelicClient;
       Application.Current.PageDisappearing += PageDisappearing;
 
       CrossNewRelicClient.Current.HandleUncaughtException();
-      if (Device.RuntimePlatform == Device.iOS)
+      // Set optional agent configuration
+      // AgentStartConfiguration agentConfig = new AgentStartConfiguration(true, true, LogLevel.INFO, "mobile-collector.newrelic.com", "mobile-crash.newrelic.com");
+      if (Device.RuntimePlatform == Device.Android) 
       {
-          CrossNewRelicClient.Current.Start("<APP-TOKEN-HERE>");
-      } else if (Device.RuntimePlatform == Device.Android)
+        CrossNewRelicClient.Current.Start("<APP-TOKEN-HERE>");
+        // Start with optional agent configuration 
+        // CrossNewRelicClient.Current.Start("<APP-TOKEN-HERE", agentConfig);
+      } else if (Device.RuntimePlatform == Device.iOS)
       {
-          CrossNewRelicClient.Current.Start("<APP-TOKEN-HERE>");
+        CrossNewRelicClient.Current.Start("<APP-TOKEN-HERE>");
+        // Start with optional agent configuration 
+        // CrossNewRelicClient.Current.Start("<APP-TOKEN-HERE", agentConfig);
       }
     }
 
