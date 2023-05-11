@@ -25,6 +25,14 @@ namespace Plugin.NewRelicClient
 
         private bool isStarted;
         private bool _isUncaughtExceptionHandled;
+        private Dictionary<LogLevel, NewRelicXamarinIOS.NRLogLevels> logLevelDict = new Dictionary<LogLevel, NewRelicXamarinIOS.NRLogLevels>()
+        {
+            { LogLevel.ERROR, NewRelicXamarinIOS.NRLogLevels.Error },
+            { LogLevel.WARNING, NewRelicXamarinIOS.NRLogLevels.Warning },
+            { LogLevel.INFO, NewRelicXamarinIOS.NRLogLevels.Info },
+            { LogLevel.VERBOSE, NewRelicXamarinIOS.NRLogLevels.Verbose },
+            { LogLevel.AUDIT, NewRelicXamarinIOS.NRLogLevels.Audit }
+        };
 
 
         public NewRelicClientManager()
@@ -33,13 +41,36 @@ namespace Plugin.NewRelicClient
 
         }
 
-        public void Start(string applicationToken)
+        public void Start(string applicationToken, AgentStartConfiguration agentConfig = null)
         {
-          
+
+            if (agentConfig == null)
+            {
+                agentConfig = new AgentStartConfiguration();
+            }
+
+            NRIosAgent.EnableCrashReporting(agentConfig.crashReportingEnabled);
             NRIosAgent.SetPlatform(NewRelicXamarinIOS.NRMAApplicationPlatform.Xamarin);
-            NRIosAgent.EnableCrashReporting(false);
-            NewRelicXamarinIOS.NRLogger.SetLogLevels((uint)NewRelicXamarinIOS.NRLogLevels.All);
-            NRIosAgent.StartWithApplicationToken(applicationToken);
+            NRIosAgent.SetPlatformVersion("dev");
+
+            NewRelicXamarinIOS.NRLogger.SetLogLevels((uint)logLevelDict[agentConfig.logLevel]);
+            if (!agentConfig.loggingEnabled)
+            {
+                NewRelicXamarinIOS.NRLogger.SetLogLevels((uint)NewRelicXamarinIOS.NRLogLevels.None);
+            }
+
+            if (agentConfig.collectorAddress.Equals("DEFAULT") && agentConfig.crashCollectorAddress.Equals("DEFAULT"))
+            {
+                NRIosAgent.StartWithApplicationToken(applicationToken);
+            }
+            else
+            {
+                string collectorAddress = agentConfig.collectorAddress.Equals("DEFAULT") ?
+                    "mobile-collector.newrelic.com" : agentConfig.collectorAddress;
+                string crashCollectorAddress = agentConfig.crashCollectorAddress.Equals("DEFAULT") ?
+                    "mobile-crash.newrelic.com" : agentConfig.crashCollectorAddress;
+                NRIosAgent.StartWithApplicationToken(applicationToken, collectorAddress, crashCollectorAddress);
+            }
         }
 
         public void CrashNow(string message = "")
@@ -250,7 +281,6 @@ namespace Plugin.NewRelicClient
             if (!_isUncaughtExceptionHandled)
             {
                 _isUncaughtExceptionHandled = true;
-                Console.WriteLine(_isUncaughtExceptionHandled);
 
                 AppDomain.CurrentDomain.UnhandledException += (s, e) =>
                 {

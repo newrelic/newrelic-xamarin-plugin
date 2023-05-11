@@ -26,6 +26,14 @@ namespace Plugin.NewRelicClient
 
         private bool isStarted;
         private EventHandler<RaiseThrowableEventArgs>? _handler;
+        private Dictionary<LogLevel, int> logLevelDict = new Dictionary<LogLevel, int>()
+        {
+            { LogLevel.ERROR, 1},
+            { LogLevel.WARNING, 2 },
+            { LogLevel.INFO, 3 },
+            { LogLevel.VERBOSE, 4 },
+            { LogLevel.AUDIT, 6 }
+        };
 
         private bool IsNumeric(Object obj)
         {
@@ -51,16 +59,36 @@ namespace Plugin.NewRelicClient
             isStarted = false;
         }
 
-        public void Start(string applicationToken)
+        public void Start(string applicationToken, AgentStartConfiguration agentConfig = null)
         {
 
-         
-            NRAndroidAgent.WithApplicationToken(applicationToken)
+            if (agentConfig == null)
+            {
+                agentConfig = new AgentStartConfiguration();
+            }
+
+            if (!agentConfig.crashReportingEnabled)
+            {
+                NRAndroidAgent.DisableFeature(Com.Newrelic.Agent.Android.FeatureFlag.CrashReporting);
+            }
+
+            var newRelic = NRAndroidAgent.WithApplicationToken(applicationToken)
                 .WithApplicationFramework(Com.Newrelic.Agent.Android.ApplicationFramework.Xamarin, "1.0.0")
-                .WithCrashReportingEnabled(false)
-                .Start(Android.App.Application.Context);
-            NRAndroidAgent.
-            Com.Newrelic.Agent.Android.Background.ApplicationStateMonitor.Instance.ActivityStarted();
+                .WithLoggingEnabled(agentConfig.loggingEnabled)
+                .WithLogLevel(logLevelDict[agentConfig.logLevel]);
+
+            if (!agentConfig.collectorAddress.Equals("DEFAULT"))
+            {
+                newRelic.UsingCollectorAddress(agentConfig.collectorAddress);
+            }
+
+            if (!agentConfig.crashCollectorAddress.Equals("DEFAULT"))
+            {
+                newRelic.UsingCrashCollectorAddress(agentConfig.crashCollectorAddress);
+            }
+
+            newRelic.Start(Android.App.Application.Context);
+
             isStarted = true;
         }
 
