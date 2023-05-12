@@ -13,6 +13,9 @@
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2023</copyright>
     <tags>newrelic xamarin android</tags>
+    <dependencies>
+      <dependency id="Xamarin.ReLinker" version="1.4.4" />
+    </dependencies>
   </metadata>
   <files>
       <file src="bin/Release/NewRelic.Xamarin.Android.Binding.dll" target="lib/MonoAndroid11/NewRelic.Xamarin.Android.Binding.dll" />
