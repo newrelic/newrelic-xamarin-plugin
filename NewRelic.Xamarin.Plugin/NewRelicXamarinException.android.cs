@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Java.Lang;
-namespace Plugin.NewRelicClient
+namespace NewRelic.Xamarin.Plugin
 {
 
     internal class NewRelicXamarinException : Java.Lang.Exception

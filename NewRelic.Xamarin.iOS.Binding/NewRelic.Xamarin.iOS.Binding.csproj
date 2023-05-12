@@ -7,9 +7,9 @@
     <ProjectGuid>{BE636119-DA3D-4235-9928-605EACAA0EA4}</ProjectGuid>
     <TemplateGuid>{b6f3ff35-79b2-4f25-a2fc-60a7cf61013b}</TemplateGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>NewRelic.iOS</RootNamespace>
+    <RootNamespace>NewRelic.Xamarin.iOS.Binding</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>NewRelic.iOS</AssemblyName>
+    <AssemblyName>NewRelic.Xamarin.iOS.Binding</AssemblyName>
     <NoBindingEmbedding>true</NoBindingEmbedding>
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
@@ -58,7 +58,7 @@
     </NativeReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="NewRelicTest.iOS.XamarinBinding.targets">
+    <None Include="NewRelic.Xamarin.iOS.Binding.targets">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

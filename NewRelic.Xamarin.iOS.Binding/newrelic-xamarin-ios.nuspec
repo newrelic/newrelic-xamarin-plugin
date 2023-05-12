@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>NewRelicTest.iOS.XamarinBinding</id>
-    <version>2.0.14</version>
-    <authors>newrelic</authors>
-    <owners>newrelic</owners>
+    <id>NewRelic.Xamarin.iOS.Binding</id>
+    <version>7.4.4</version>
+    <authors>New Relic</authors>
+    <owners>New Relic</owners>
     <projectUrl>https://github.com/newrelic/newrelic-react-native-agent</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <title>NewRelic iOS SDK</title>
@@ -19,9 +19,9 @@
     </dependencies>
   </metadata>
   <files>
-      <file src="bin/Release/NewRelic.iOS.dll" target="lib/Xamarin.iOS10/NewRelic.iOS.dll" />
-      <file src="bin/Release/NewRelic.iOS.dll" target="lib/net6.0-ios15.4/NewRelic.iOS.dll" />
-      <file src="bin/Release/NewRelic.iOS.resources/**" target="content/NewRelic.iOS.resources" />
-      <file src="NewRelicTest.iOS.XamarinBinding.targets" target="build/NewRelicTest.iOS.XamarinBinding.targets" />
+      <file src="bin/Release/NewRelic.Xamarin.iOS.Binding.dll" target="lib/Xamarin.iOS10/NewRelic.Xamarin.iOS.Binding.dll" />
+      <file src="bin/Release/NewRelic.Xamarin.iOS.Binding.dll" target="lib/net6.0-ios15.4/NewRelic.Xamarin.iOS.Binding.dll" />
+      <file src="bin/Release/NewRelic.Xamarin.iOS.Binding.resources/**" target="content/NewRelic.Xamarin.iOS.Binding.resources" />
+      <file src="NewRelic.Xamarin.iOS.Binding.targets" target="build/NewRelic.Xamarin.iOS.Binding.targets" />
   </files>
 </package> 

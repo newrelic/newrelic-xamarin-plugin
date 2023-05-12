@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Plugin.NewRelicClient
+namespace NewRelic.Xamarin.Plugin
 {
 
     public enum LogLevel

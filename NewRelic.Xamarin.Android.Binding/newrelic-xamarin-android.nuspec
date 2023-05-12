@@ -2,9 +2,9 @@
 <package >
   <metadata>
     <id>NewRelic.Xamarin.Android.Binding</id>
-    <version>1.0.1</version>
-    <authors>newrelic</authors>
-    <owners>newrelic</owners>
+    <version>6.11.0</version>
+    <authors>New Relic</authors>
+    <owners>New Relic</owners>
     <projectUrl>https://github.com/newrelic/newrelic-react-native-agent</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <title>NewRelic Android SDK</title>
@@ -13,11 +13,8 @@
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2023</copyright>
     <tags>newrelic xamarin android</tags>
-    <dependencies>
-      <dependency id="Xamarin.ReLinker" version="1.4.4" />
-    </dependencies>
   </metadata>
   <files>
-      <file src="bin/Debug/NewRelic.Xamarin.Android.Binding.dll" target="lib/MonoAndroid11/NewRelic.Xamarin.Android.Binding.dll" />
+      <file src="bin/Release/NewRelic.Xamarin.Android.Binding.dll" target="lib/MonoAndroid11/NewRelic.Xamarin.Android.Binding.dll" />
   </files>
 </package>

@@ -1,11 +1,11 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <Target Name="NewRelicCopyResourcesWithXCFramework" BeforeTargets="BeforeCompile" Condition="'$(TargetFrameworkIdentifier)' == 'Xamarin.iOS'">
         <ItemGroup>
-            <BindingResources Include="$(MSBuildThisFileDirectory)../content/NewRelic.iOS.resources/**/*.*" />
+            <BindingResources Include="$(MSBuildThisFileDirectory)../content/NewRelic.Xamarin.iOS.Binding.resources/**/*.*" />
         </ItemGroup>
-        <Copy SourceFiles="@(BindingResources)" DestinationFolder="$(TargetDir)/NewRelic.iOS.resources/%(RecursiveDir)" ContinueOnError="false" />
+        <Copy SourceFiles="@(BindingResources)" DestinationFolder="$(TargetDir)/NewRelic.Xamarin.iOS.Binding.resources/%(RecursiveDir)" ContinueOnError="false" />
         <ItemGroup>
-            <NativeReference Include="$(TargetDir)/NewRelic.iOS.resources\NewRelic.xcframework">
+            <NativeReference Include="$(TargetDir)/NewRelic.Xamarin.iOS.Binding.resources\NewRelic.xcframework">
                 <Kind>Framework</Kind>
                 <SmartLink>True</SmartLink>
                 <ForceLoad>True</ForceLoad>

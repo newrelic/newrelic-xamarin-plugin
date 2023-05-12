@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Plugin.NewRelicClient
+namespace NewRelic.Xamarin.Plugin
 {
 	
     public interface INewRelicClientManager

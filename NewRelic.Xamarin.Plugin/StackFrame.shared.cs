@@ -4,7 +4,7 @@
  */
 
 using System;
-namespace Plugin.NewRelicClient
+namespace NewRelic.Xamarin.Plugin
 {
     internal class StackFrame
     {
