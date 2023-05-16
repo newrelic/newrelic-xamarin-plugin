@@ -2,17 +2,17 @@
 <package >
   <metadata>
     <id>NewRelic.Xamarin.Android.Binding</id>
-    <version>6.11.0</version>
+    <version>6.11.1</version>
     <authors>New Relic</authors>
     <owners>New Relic</owners>
-    <projectUrl>https://github.com/newrelic/newrelic-react-native-agent</projectUrl>
+    <projectUrl>https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobile-android/get-started/introduction-new-relic-mobile-android</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <title>NewRelic Android SDK</title>
-    <summary>NewRelic Android SDK binding for Xamarin iOS</summary>
+    <title>New Relic Android SDK</title>
+    <summary>New Relic Android SDK binding for Xamarin Android</summary>
     <description>With NewRelic, you can collect crashes, network traffic, and other information for Xamarin Android apps using native components.</description>
-    <releaseNotes></releaseNotes>
     <copyright>Copyright 2023</copyright>
-    <tags>newrelic xamarin android</tags>
+    <tags>xamarin;android;newrelic;observability;monitoring;telemetry</tags>
+    <license type="expression">Apache-2.0</license>
     <dependencies>
       <dependency id="Xamarin.ReLinker" version="1.4.4" />
     </dependencies>

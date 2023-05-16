@@ -16,17 +16,13 @@
 		<UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
 		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 		<LangVersion>latest</LangVersion>
-		<license>
-		</license>
-		<PackageProjectUrl>
-		</PackageProjectUrl>
-		<RepositoryUrl>
-		</RepositoryUrl>
-		<PackageTags>xamarin, ios, android, xamarin.forms, newrelic</PackageTags>
-		<Title>NewRelic Plugin for Xamarin</Title>
-		<Summary>NewRelic Plugin handling across Xamarin.iOS and Xamarin.Android</Summary>
-		<Description>NewRelic Plugin handling across Xamarin.iOS and Xamarin.Android</Description>
-		<Authors>NewRelic Inc.</Authors>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PackageTags>xamarin;ios;android;xamarin.forms;newrelic;observability;monitoring;telemetry</PackageTags>
+		<Title>New Relic Plugin for Xamarin</Title>
+		<Summary>New Relic Plugin handling across Xamarin.iOS and Xamarin.Android</Summary>
+		<Description>With the New Relic Xamarin mobile plugin, your team can monitor the performance of Xamarin apps and identify code errors. The plugin collects crash data, network traffic, and other information for your apps using native components.</Description>
+		<Authors>New Relic</Authors>
 		<Copyright>Copyright 2023</Copyright>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
@@ -53,7 +49,7 @@
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
 	</ItemGroup>
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
-		<PackageReference Include="NewRelic.Xamarin.Android.Binding" Version="6.11.0" />
+		<PackageReference Include="NewRelic.Xamarin.Android.Binding" Version="6.11.1" />
 		<Compile Include="**\*.android.cs" />
 		<Compile Include="**\*.android.*.cs" />
 	</ItemGroup>
