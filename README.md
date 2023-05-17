@@ -24,18 +24,18 @@ This plugin allows you to instrument Xamarin Forms, iOS and Android apps with he
 
 ## Installation
 
-Install NewRelic plugin into your Xamarin project by adding as NuGet Package `Plugin.NewRelicClient`.
+Install NewRelic plugin into your Xamarin project by adding as NuGet Package `NewRelic.Xamarin.Plugin`.
 
 Open your solution, select the project you want to add NewRelic package to and open its context menu. Unfold "Add" and click "Add NuGet packages...".
 
-On your iOS app, you will also need to add NuGet package `NewRelicTest.iOS.XamarinBinding` to the dependencies.
+On your iOS app, you will also need to add NuGet package `NewRelic.Xamarin.iOS.Binding` to the dependencies.
 
 ## Xamarin Setup
 
 1. Open your `App.xaml.cs` and add the following code to launch NewRelic Plugin (don't forget to put proper application tokens):
 
 ```C#
-using Plugin.NewRelicClient;
+using NewRelic.Xamarin.Plugin;
 ...
     public App ()
     {

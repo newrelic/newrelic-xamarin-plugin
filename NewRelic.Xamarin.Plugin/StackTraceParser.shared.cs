@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
-namespace Plugin.NewRelicClient
+namespace NewRelic.Xamarin.Plugin
 {
     internal static class StackTraceParser
     {

@@ -2,13 +2,13 @@
 <Project Sdk="MSBuild.Sdk.Extras/3.0.44">
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;MonoAndroid10.0;Xamarin.iOS10;</TargetFrameworks>
-		<AssemblyName>Plugin.NewRelicClient</AssemblyName>
-		<RootNamespace>Plugin.NewRelicClient</RootNamespace>
-		<PackageId>Plugin.NewRelicClient</PackageId>
+		<AssemblyName>NewRelic.Xamarin.Plugin</AssemblyName>
+		<RootNamespace>NewRelic.Xamarin.Plugin</RootNamespace>
+		<PackageId>NewRelic.Xamarin.Plugin</PackageId>
 		<Product>$(AssemblyName) ($(TargetFramework))</Product>
-		<AssemblyVersion>2.0.0.28</AssemblyVersion>
-		<AssemblyFileVersion>2.0.0.28</AssemblyFileVersion>
-		<Version>2.0.0.28</Version>
+		<AssemblyVersion>0.0.1</AssemblyVersion>
+		<AssemblyFileVersion>0.0.1</AssemblyFileVersion>
+		<Version>0.0.1</Version>
 		<PackOnBuild>true</PackOnBuild>
 		<NeutralLanguage>en</NeutralLanguage>
 		<LangVersion>default</LangVersion>
@@ -16,17 +16,13 @@
 		<UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
 		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 		<LangVersion>latest</LangVersion>
-		<license>
-		</license>
-		<PackageProjectUrl>
-		</PackageProjectUrl>
-		<RepositoryUrl>
-		</RepositoryUrl>
-		<PackageTags>xamarin, ios, android, xamarin.forms,newrlic </PackageTags>
-		<Title>NewRelic Plugin for Xamarin</Title>
-		<Summary>NewRelic Plugin handling across Xamarin.iOS and Xamarin.Android</Summary>
-		<Description>NewRelic Plugin handling across Xamarin.iOS and Xamarin.Android</Description>
-		<Authors>NewRelic Inc.</Authors>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PackageTags>xamarin;ios;android;xamarin.forms;newrelic;observability;monitoring;telemetry</PackageTags>
+		<Title>New Relic Plugin for Xamarin</Title>
+		<Summary>New Relic Plugin handling across Xamarin.iOS and Xamarin.Android</Summary>
+		<Description>With the New Relic Xamarin mobile plugin, your team can monitor the performance of Xamarin apps and identify code errors. The plugin collects crash data, network traffic, and other information for your apps using native components.</Description>
+		<Authors>New Relic</Authors>
 		<Copyright>Copyright 2023</Copyright>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
@@ -43,7 +39,7 @@
 	</PropertyGroup>
 	<PropertyGroup>
 		<NoWarn>1701;1702;1591</NoWarn>
-		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Plugin.NewRelicClient.xml</DocumentationFile>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\NewRelic.Xamarin.Plugin.xml</DocumentationFile>
 		<Company>NewRelic</Company>
 	</PropertyGroup>
 	<ItemGroup>
@@ -53,12 +49,12 @@
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
 	</ItemGroup>
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
-		<PackageReference Include="NewRelicTest.Android.XamarinBinding" Version="1.0.1" />
+		<PackageReference Include="NewRelic.Xamarin.Android.Binding" Version="6.11.1" />
 		<Compile Include="**\*.android.cs" />
 		<Compile Include="**\*.android.*.cs" />
 	</ItemGroup>
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
-		<PackageReference Include="NewRelicTest.iOS.XamarinBinding" Version="2.0.14" />
+		<PackageReference Include="NewRelic.Xamarin.iOS.Binding" Version="7.4.4" />
 		<Compile Include="**\*.apple.cs" />
 		<Compile Include="**\*.apple.*.cs" />
 	</ItemGroup>

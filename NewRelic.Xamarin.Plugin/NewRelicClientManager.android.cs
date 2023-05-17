@@ -16,7 +16,7 @@ using Android.Runtime;
 
 
 
-namespace Plugin.NewRelicClient
+namespace NewRelic.Xamarin.Plugin
 {
     /// <summary>
     /// Implementation for NewRelicClient
@@ -73,7 +73,7 @@ namespace Plugin.NewRelicClient
             }
 
             var newRelic = NRAndroidAgent.WithApplicationToken(applicationToken)
-                .WithApplicationFramework(Com.Newrelic.Agent.Android.ApplicationFramework.Xamarin, "1.0.0")
+                .WithApplicationFramework(Com.Newrelic.Agent.Android.ApplicationFramework.Xamarin, "0.0.1")
                 .WithLoggingEnabled(agentConfig.loggingEnabled)
                 .WithLogLevel(logLevelDict[agentConfig.logLevel]);
 

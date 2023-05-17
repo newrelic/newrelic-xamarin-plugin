@@ -13,7 +13,7 @@ using NRIosAgent = NewRelicXamarinIOS.NewRelic;
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace Plugin.NewRelicClient
+namespace NewRelic.Xamarin.Plugin
 {
     /// <summary>
     /// Implementation for NewRelicClient
@@ -51,7 +51,7 @@ namespace Plugin.NewRelicClient
 
             NRIosAgent.EnableCrashReporting(agentConfig.crashReportingEnabled);
             NRIosAgent.SetPlatform(NewRelicXamarinIOS.NRMAApplicationPlatform.Xamarin);
-            NRIosAgent.SetPlatformVersion("dev");
+            NRIosAgent.SetPlatformVersion("0.0.1");
 
             NewRelicXamarinIOS.NRLogger.SetLogLevels((uint)logLevelDict[agentConfig.logLevel]);
             if (!agentConfig.loggingEnabled)

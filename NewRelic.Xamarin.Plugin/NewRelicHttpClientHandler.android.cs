@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Com.Newrelic.Agent.Android.Distributedtracing;
 using NRAndroidAgent = Com.Newrelic.Agent.Android.NewRelic;
 
-namespace Plugin.NewRelicClient
+namespace NewRelic.Xamarin.Plugin
 {
 	public class NewRelicHttpClientHandler: HttpClientHandler
     {
