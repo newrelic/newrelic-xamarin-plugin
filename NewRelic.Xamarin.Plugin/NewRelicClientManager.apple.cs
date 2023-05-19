@@ -12,6 +12,7 @@ using UIKit;
 using NRIosAgent = NewRelicXamarinIOS.NewRelic;
 using System.Collections.Generic;
 using System.Net.Http;
+using Xamarin.Forms;
 
 namespace NewRelic.Xamarin.Plugin
 {
@@ -291,7 +292,22 @@ namespace NewRelic.Xamarin.Plugin
                 };
             }
         
-    }
+        }
+
+        public void TrackShellNavigatedEvents()
+        {
+            Shell.Current.Navigated += (sender, e) =>
+            {
+                Dictionary<string, object> attr = new Dictionary<string, object>();
+                if (e.Previous != null)
+                {
+                    attr.Add("Previous", e.Previous.Location.ToString());
+                }
+                attr.Add("Current", e.Current.Location.ToString());
+                attr.Add("Source", e.Source.ToString());
+                this.RecordBreadcrumb("ShellNavigated", attr);
+            };
+        }
     }
 }
 
