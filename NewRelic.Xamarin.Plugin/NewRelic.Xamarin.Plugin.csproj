@@ -43,6 +43,9 @@
 		<Company>NewRelic</Company>
 	</PropertyGroup>
 	<ItemGroup>
+		<Reference Include="netstandard" />
+	</ItemGroup>
+	<ItemGroup>
 		<Compile Include="**\*.shared.cs" />
 		<Compile Include="**\*.shared.*.cs" />
 	</ItemGroup>
@@ -61,5 +64,8 @@
 	<ItemGroup>
 		<None Remove="Mono.Android" />
 		<None Remove="Xamarin.Forms" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2578" />
 	</ItemGroup>
 </Project>

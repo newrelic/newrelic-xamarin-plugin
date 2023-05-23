@@ -73,7 +73,7 @@ namespace NewRelic.Xamarin.Plugin
 
         void HandleUncaughtException(bool shouldThrowFormattedException = true);
 
-
+        void TrackShellNavigatedEvents();
 
     }
 

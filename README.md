@@ -46,12 +46,14 @@ using NewRelic.Xamarin.Plugin;
       Application.Current.PageDisappearing += PageDisappearing;
 
       CrossNewRelicClient.Current.HandleUncaughtException();
+      CrossNewRelicClient.Current.TrackShellNavigatedEvents()
       // Set optional agent configuration
+      // Options are: crashReportingEnabled, loggingEnabled, logLevel, collectorAddress, crashCollectorAddress
       // AgentStartConfiguration agentConfig = new AgentStartConfiguration(true, true, LogLevel.INFO, "mobile-collector.newrelic.com", "mobile-crash.newrelic.com");
       if (Device.RuntimePlatform == Device.Android) 
       {
         CrossNewRelicClient.Current.Start("<APP-TOKEN-HERE>");
-        // Start with optional agent configuration 
+        // Start with optional agent configuration
         // CrossNewRelicClient.Current.Start("<APP-TOKEN-HERE", agentConfig);
       } else if (Device.RuntimePlatform == Device.iOS)
       {
@@ -75,7 +77,22 @@ using NewRelic.Xamarin.Plugin;
 
 ## Screen Tracking Events
 
-:construction: WORK IN PROGRESS :construction:
+The Xamarin mobile plugin allows you to track navigation events within the [.NET MAUI Shell](https://learn.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/shell/). In order to do so, you only need to call:
+
+```C#
+    CrossNewRelicClient.Current.TrackShellNavigatedEvents();
+```
+
+It is recommended to call this method along when starting the agent. These events will only be recorded after navigation is complete. You can find this data through the data explorer in `MobileBreadcrumb` under the name `ShellNavigated` or by query:
+
+```sql
+    SELECT * FROM MobileBreadcrumb WHERE name = 'ShellNavigated' SINCE 24 HOURS AGO
+```
+
+The breadcrumb will contain three attributes:
+* `Current`: The URI of the current page.
+* `Source`: The type of navigation that occurred.
+* `Previous`: The URI of the previous page. Will not exist if previous page was null. 
 
 
 ## Usage
