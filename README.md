@@ -164,9 +164,22 @@ or [Android SDK](https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobi
     );
 ```
 
+### [NoticeNetworkFailure](https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobile-android/android-sdk-api/notice-network-failure/)(string url, string httpMethod, int statusCode, long startTime,long endTime, long bytesSent, long bytesReceived, string responseBody): void;
+
+> Records network failures. If a network request fails, use this method to record details about the failure.
+``` C#
+    CrossNewRelicClient.Current.NoticeNetworkFailure(
+      "https://fakewebsite.com",
+      "GET",
+      DateTimeOffset.Now.ToUnixTimeMilliseconds(),
+      DateTimeOffset.Now.ToUnixTimeMilliseconds() + 100,
+      NetworkFailure.Unknown
+    );
+```
+
 ### [RecordBreadcrumb](https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobile-android/android-sdk-api/recordbreadcrumb)(string name, Dictionary<string, object> attributes): bool;
 
-> Track app activity/screen that may be helpful for troubleshooting crashes.
+> This call creates and records a MobileBreadcrumb event, which can be queried with NRQL and in the crash event trail.
 
 ``` C#
     CrossNewRelicClient.Current.RecordBreadcrumb("XamarinExampleBreadcrumb", new Dictionary<string, object>()
@@ -194,12 +207,14 @@ or [Android SDK](https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobi
 
 ### [RecordMetric](https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobile-android/android-sdk-api/recordmetric-android-sdk-api/)(string name, string category) : void;
 ### [RecordMetric](https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobile-android/android-sdk-api/recordmetric-android-sdk-api/)(string name, string category, double value) : void;
+### [RecordMetric](https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobile-android/android-sdk-api/recordmetric-android-sdk-api/)(string name, string category, double value, MetricUnit countUnit, MetricUnit valueUnit) : void;
 
 > Record custom metrics (arbitrary numerical data).
 
 ``` C#
     CrossNewRelicClient.Current.RecordMetric("Agent start", "Lifecycle");
     CrossNewRelicClient.Current.RecordMetric("Login Auth Metric", "Network", 78.9);
+    CrossNewRelicClient.Current.RecordMetric("Request Metric", "Network", 20, MetricUnit.SECONDS, MetricUnit.OPERATIONS);
 ```
 
 ### [SetAttribute](https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobile-android/android-sdk-api/set-attribute)(string name, string value) : bool;
@@ -281,15 +296,15 @@ or [Android SDK](https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobi
     }
 ```
 
-### AnalyticsEventEnabled(bool enabled) : void
+### AnalyticsEventEnabled(bool enabled) : void;
 
-> FOR ANDROID ONLY. Enabled or disable collection of event data
+> FOR ANDROID ONLY. Enable or disable collection of event data.
 
 ``` C#
     CrossNewRelicClient.Current.AnalyticsEventEnabled(true);
 ```
 
-### NetworkRequestEnabled(bool enabled) : void
+### NetworkRequestEnabled(bool enabled) : void;
 
 > Enable or disable reporting successful HTTP requests to the MobileRequest event type.
 
@@ -297,7 +312,7 @@ or [Android SDK](https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobi
     CrossNewRelicClient.Current.NetworkRequestEnabled(true);
 ```
 
-### NetworkErrorRequestEnabled(bool enabled) : void
+### NetworkErrorRequestEnabled(bool enabled) : void;
 
 > Enable or disable reporting network and HTTP request errors to the MobileRequestError event type.
 
@@ -305,14 +320,20 @@ or [Android SDK](https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobi
     CrossNewRelicClient.Current.NetworkErrorRequestEnabled(true);
 ```
 
-### HttpResponseBodyCaptureEnabled(bool enabled) : void
+### HttpResponseBodyCaptureEnabled(bool enabled) : void;
 
-> Enable or disable capture of HTTP response bodies for HTTP error traces, and MobileRequestError events
+> Enable or disable capture of HTTP response bodies for HTTP error traces, and MobileRequestError events.
 
 ``` C#
     CrossNewRelicClient.Current.HttpResponseBodyCaptureEnabled(true);
 ```
 
+### [Shutdown](https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobile-android/android-sdk-api/shut-down/)(): void;
+
+> Shut down the agent within the current application lifecycle during runtime.
+``` C#
+    CrossNewRelicClient.Current.Shutdown();
+```
 
 ## Error reporting
 

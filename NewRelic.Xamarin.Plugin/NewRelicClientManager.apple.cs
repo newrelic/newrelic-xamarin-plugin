@@ -13,6 +13,7 @@ using NRIosAgent = NewRelicXamarinIOS.NewRelic;
 using System.Collections.Generic;
 using System.Net.Http;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 
 namespace NewRelic.Xamarin.Plugin
 {
@@ -33,6 +34,26 @@ namespace NewRelic.Xamarin.Plugin
             { LogLevel.INFO, NewRelicXamarinIOS.NRLogLevels.Info },
             { LogLevel.VERBOSE, NewRelicXamarinIOS.NRLogLevels.Verbose },
             { LogLevel.AUDIT, NewRelicXamarinIOS.NRLogLevels.Audit }
+        };
+
+        private Dictionary<NetworkFailure, NewRelicXamarinIOS.NRNetworkFailureCode> networkFailureDict = new Dictionary<NetworkFailure,NewRelicXamarinIOS.NRNetworkFailureCode>()
+        {
+            { NetworkFailure.Unknown, NewRelicXamarinIOS.NRNetworkFailureCode.Unknown },
+            { NetworkFailure.BadURL, NewRelicXamarinIOS.NRNetworkFailureCode.BadURL },
+            { NetworkFailure.TimedOut, NewRelicXamarinIOS.NRNetworkFailureCode.TimedOut },
+            { NetworkFailure.CannotConnectToHost, NewRelicXamarinIOS.NRNetworkFailureCode.CannotConnectToHost },
+            { NetworkFailure.DNSLookupFailed, NewRelicXamarinIOS.NRNetworkFailureCode.DNSLookupFailed },
+            { NetworkFailure.BadServerResponse, NewRelicXamarinIOS.NRNetworkFailureCode.BadServerResponse },
+            { NetworkFailure.SecureConnectionFailed, NewRelicXamarinIOS.NRNetworkFailureCode.SecureConnectionFailed }
+        };
+
+        private Dictionary<MetricUnit, string> metricUnitDict = new Dictionary<MetricUnit, string>()
+        {
+            { MetricUnit.PERCENT, "%" },
+            { MetricUnit.BYTES, "bytes" },
+            { MetricUnit.SECONDS, "sec" },
+            { MetricUnit.BYTES_PER_SECOND, "bytes/second" },
+            { MetricUnit.OPERATIONS, "op" }
         };
 
 
@@ -117,6 +138,12 @@ namespace NewRelic.Xamarin.Plugin
             return;
         }
 
+        public void NoticeNetworkFailure(string url, string httpMethod, long startTime, long endTime, NetworkFailure failure)
+        {
+            NRIosAgent.NoticeNetworkFailureForURL(NSUrl.FromString(url), httpMethod, (double)startTime, (double)endTime, (int)networkFailureDict[failure]);
+            return;
+        }
+
         public bool RecordBreadcrumb(string name, Dictionary<string, object> attributes)
         {
 
@@ -152,11 +179,11 @@ namespace NewRelic.Xamarin.Plugin
             return;
         }
 
-        //public void RecordMetric(string name, string category, double value, NewRelicXamarin.MetricUnit countUnit, NewRelicXamarin.MetricUnit valueUnit)
-        //{
-        //    //NRIosAgent.RecordMetricWithName(name, category, value, metricUnitsDict[valueUnit], metricUnitsDict[countUnit]);
-        //    //return;
-        //}
+        public void RecordMetric(string name, string category, double value, MetricUnit countUnit, MetricUnit valueUnit)
+        {
+            NRIosAgent.RecordMetricWithName(name, category, Foundation.NSNumber.FromDouble(value), metricUnitDict[valueUnit], metricUnitDict[countUnit]);
+            return;
+        }
 
         public bool RemoveAllAttributes()
         {
@@ -307,6 +334,12 @@ namespace NewRelic.Xamarin.Plugin
                 attr.Add("Source", e.Source.ToString());
                 this.RecordBreadcrumb("ShellNavigated", attr);
             };
+        }
+
+        public void Shutdown()
+        {
+            NRIosAgent.Shutdown();
+            return;
         }
     }
 }
