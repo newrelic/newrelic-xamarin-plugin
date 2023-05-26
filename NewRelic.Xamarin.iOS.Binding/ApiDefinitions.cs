@@ -346,7 +346,12 @@ namespace NewRelicXamarinIOS
 		[Static]
 		[Export ("recordError:attributes:")]
 		void RecordError (NSError error, [NullAllowed] NSDictionary attributes);
-	}
+
+        // +(void)shutdown();
+        [Static]
+        [Export("shutdown")]
+        void Shutdown();
+    }
 
 	// @interface NewRelicAgent : NewRelic
 	[BaseType (typeof(NewRelic))]

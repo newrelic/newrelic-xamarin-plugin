@@ -14,6 +14,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using Android.Runtime;
 using Xamarin.Forms;
+using NRNetworkFailure = Com.Newrelic.Agent.Android.Util.NetworkFailure;
+using NRMetricUnit = Com.Newrelic.Agent.Android.Metric.MetricUnit;
 
 namespace NewRelic.Xamarin.Plugin
 {
@@ -25,6 +27,7 @@ namespace NewRelic.Xamarin.Plugin
 
         private bool isStarted;
         private EventHandler<RaiseThrowableEventArgs>? _handler;
+
         private Dictionary<LogLevel, int> logLevelDict = new Dictionary<LogLevel, int>()
         {
             { LogLevel.ERROR, 1},
@@ -32,6 +35,26 @@ namespace NewRelic.Xamarin.Plugin
             { LogLevel.INFO, 3 },
             { LogLevel.VERBOSE, 4 },
             { LogLevel.AUDIT, 6 }
+        };
+
+        private Dictionary<NetworkFailure, NRNetworkFailure> networkFailureDict = new Dictionary<NetworkFailure, NRNetworkFailure>()
+        {
+            { NetworkFailure.Unknown, NRNetworkFailure.Unknown },
+            { NetworkFailure.BadURL, NRNetworkFailure.BadURL },
+            { NetworkFailure.TimedOut, NRNetworkFailure.TimedOut },
+            { NetworkFailure.CannotConnectToHost, NRNetworkFailure.CannotConnectToHost },
+            { NetworkFailure.DNSLookupFailed, NRNetworkFailure.DNSLookupFailed },
+            { NetworkFailure.BadServerResponse, NRNetworkFailure.BadServerResponse },
+            { NetworkFailure.SecureConnectionFailed, NRNetworkFailure.SecureConnectionFailed }
+        };
+
+        private Dictionary<MetricUnit, NRMetricUnit> metricUnitDict = new Dictionary<MetricUnit, NRMetricUnit>()
+        {
+            { MetricUnit.PERCENT, NRMetricUnit.Percent },
+            { MetricUnit.BYTES, NRMetricUnit.Bytes },
+            { MetricUnit.SECONDS, NRMetricUnit.Seconds },
+            { MetricUnit.BYTES_PER_SECOND, NRMetricUnit.BytesPerSecond },
+            { MetricUnit.OPERATIONS, NRMetricUnit.Operations }
         };
 
         private bool IsNumeric(Object obj)
@@ -125,6 +148,12 @@ namespace NewRelic.Xamarin.Plugin
             return;
         }
 
+        public void NoticeNetworkFailure(string url, string httpMethod, long startTime, long endTime, NetworkFailure failure)
+        {
+            NRAndroidAgent.NoticeNetworkFailure(url, httpMethod, startTime, endTime, networkFailureDict[failure]);
+            return;
+        }
+
         public bool RecordBreadcrumb(string name, Dictionary<string, object> attributes)
         {
             Dictionary<string, Java.Lang.Object> strToJavaObject = new Dictionary<string, Java.Lang.Object>();
@@ -179,11 +208,11 @@ namespace NewRelic.Xamarin.Plugin
             return;
         }
 
-        //public void RecordMetric(string name, string category, double value, NewRelicXamarin.MetricUnit countUnit, NewRelicXamarin.MetricUnit valueUnit)
-        //{
-        //    //NRAndroidAgent.RecordMetric(name, category, 1, value, value, metricUnitsDict[countUnit], metricUnitsDict[valueUnit]);
-        //    //return;
-        //}
+        public void RecordMetric(string name, string category, double value, MetricUnit countUnit, MetricUnit valueUnit)
+        {
+            NRAndroidAgent.RecordMetric(name, category, 0, value, 0, metricUnitDict[countUnit], metricUnitDict[valueUnit]);
+            return;
+        }
 
         public bool RemoveAllAttributes()
         {
@@ -288,12 +317,12 @@ namespace NewRelic.Xamarin.Plugin
         {
             var handler = new NewRelicHttpClientHandler();
 
-            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
-            {
-               if (cert.Issuer.Equals("CN=localhost"))
-                   return true;
-               return errors == System.Net.Security.SslPolicyErrors.None;
-            };
+            // handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
+            // {
+            //     if (cert.Issuer.Equals("CN=localhost"))
+            //         return true;
+            //     return errors == System.Net.Security.SslPolicyErrors.None;
+            // };
             return handler;
 
         }
@@ -338,6 +367,12 @@ namespace NewRelic.Xamarin.Plugin
                 attr.Add("Source", e.Source.ToString());
                 this.RecordBreadcrumb("ShellNavigated", attr);
             };
+        }
+
+        public void Shutdown()
+        {
+            NRAndroidAgent.Shutdown();
+            return;
         }
 
     }
