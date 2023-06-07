@@ -57,7 +57,7 @@
 		<Compile Include="**\*.android.*.cs" />
 	</ItemGroup>
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
-		<PackageReference Include="NewRelic.Xamarin.iOS.Binding" Version="7.4.4" />
+		<PackageReference Include="NewRelic.Xamarin.iOS.Binding" Version="7.4.5" />
 		<Compile Include="**\*.apple.cs" />
 		<Compile Include="**\*.apple.*.cs" />
 	</ItemGroup>
