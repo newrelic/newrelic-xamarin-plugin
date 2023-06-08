@@ -16,6 +16,7 @@
 		<UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
 		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 		<LangVersion>latest</LangVersion>
+		<PackageProjectUrl>https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobile-xamarin/monitor-your-xamarin-application</PackageProjectUrl>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<PackageTags>xamarin;ios;android;xamarin.forms;newrelic;observability;monitoring;telemetry</PackageTags>

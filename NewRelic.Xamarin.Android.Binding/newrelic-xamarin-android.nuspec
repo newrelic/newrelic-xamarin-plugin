@@ -5,7 +5,7 @@
     <version>6.11.1</version>
     <authors>New Relic</authors>
     <owners>New Relic</owners>
-    <projectUrl>https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobile-android/get-started/introduction-new-relic-mobile-android</projectUrl>
+    <projectUrl>https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobile-xamarin/monitor-your-xamarin-application/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <title>New Relic Android SDK</title>
     <summary>New Relic Android SDK binding for Xamarin Android</summary>
