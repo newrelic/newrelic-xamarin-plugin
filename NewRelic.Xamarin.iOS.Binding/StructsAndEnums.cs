@@ -26,8 +26,9 @@ namespace NewRelicXamarinIOS
 		ExperimentalNetworkingInstrumentation = 1uL << 13,
 		DistributedTracing = 1uL << 14,
 		GestureInstrumentation = 1uL << 15,
-		AppStartMetrics = 1uL << 16
-	}
+		AppStartMetrics = 1uL << 16,
+		FedRampEnabled = 1uL << 17
+    }
 
 	[Native]
 	public enum NRMAApplicationPlatform : ulong
