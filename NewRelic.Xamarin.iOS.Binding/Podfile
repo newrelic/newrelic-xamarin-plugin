@@ -6,4 +6,4 @@ target 'ObjectiveSharpieIntegration' do
   use_frameworks!
 end
 
-pod 'NewRelicAgent', '7.4.5'
+pod 'NewRelicAgent', '7.4.8'

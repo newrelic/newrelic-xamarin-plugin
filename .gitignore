@@ -406,3 +406,6 @@ ASALocalRun/
 
 NewRelic.Xamarin.iOS.Binding/Pods
 Podfile.lock
+ NewRelic.Xamarin.iOS.Binding/bindings/
+ *.sln
+ .vscode/
