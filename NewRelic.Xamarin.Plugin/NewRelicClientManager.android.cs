@@ -95,7 +95,7 @@ namespace NewRelic.Xamarin.Plugin
             }
 
             var newRelic = NRAndroidAgent.WithApplicationToken(applicationToken)
-                .WithApplicationFramework(Com.Newrelic.Agent.Android.ApplicationFramework.Xamarin, "0.0.1")
+                .WithApplicationFramework(Com.Newrelic.Agent.Android.ApplicationFramework.Xamarin, "0.0.2")
                 .WithLoggingEnabled(agentConfig.loggingEnabled)
                 .WithLogLevel(logLevelDict[agentConfig.logLevel]);
 
@@ -375,5 +375,15 @@ namespace NewRelic.Xamarin.Plugin
             return;
         }
 
+        public void addHTTPHeadersTrackingFor(List<string> headers)
+        {
+            NRAndroidAgent.AddHTTPHeadersTrackingFor(headers);
+            return;
+        }
+
+        public List<string> getHTTPHeadersTrackingFor()
+        {
+            return Com.Newrelic.Agent.Android.HttpHeaders.Instance.GetHttpHeaders().ToList();
+        }
     }
 }

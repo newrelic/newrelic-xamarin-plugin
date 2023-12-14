@@ -5,25 +5,44 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Com.Newrelic.Agent.Android.Distributedtracing;
 using NRAndroidAgent = Com.Newrelic.Agent.Android.NewRelic;
+using HeaderList = Com.Newrelic.Agent.Android.HttpHeaders;
 
 namespace NewRelic.Xamarin.Plugin
 {
-	internal class NewRelicHttpClientHandler: HttpClientHandler
+    internal class NewRelicHttpClientHandler : HttpClientHandler
     {
         private string TRACE_PARENT = "traceparent";
         private string TRACE_STATE = "tracestate";
- 		public NewRelicHttpClientHandler()
-		{
+        public NewRelicHttpClientHandler()
+        {
 
-		}
+        }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            Dictionary<string, string> Headers_Params =
+                                new Dictionary<string, string>();
+
+            List<string> headersList = HeaderList.Instance.GetHttpHeaders().ToList();
+
+            foreach (string h in headersList)
+            {
+                if (request.Headers.Contains(h))
+                {
+                    if (request.Headers.TryGetValues(h, out IEnumerable<string> values))
+                    {
+                        Headers_Params.Add(h, values.First());
+                    }
+
+                }
+            }
+
             var starTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
             HttpResponseMessage httpResponseMessage;
             TraceContext traceContext = NRAndroidAgent.NoticeDistributedTrace(null);
@@ -32,7 +51,7 @@ namespace NewRelic.Xamarin.Plugin
             request.Headers.Add(TRACE_STATE, traceContext.Vendor + "=0-2-" + traceContext.AccountId + "-" + traceContext.ApplicationId + "-" + traceContext.ParentId + "----" + DateTimeOffset.Now.ToUnixTimeMilliseconds());
             httpResponseMessage = await base.SendAsync(request, cancellationToken);
             var endTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-            NRAndroidAgent.NoticeHttpTransaction(request.RequestUri.ToString(), request.Method.ToString(), ((int)httpResponseMessage.StatusCode), starTime, endTime, 0, httpResponseMessage.ToString().Length, "",null , null, traceContext.AsTraceAttributes());
+            NRAndroidAgent.NoticeHttpTransaction(request.RequestUri.ToString(), request.Method.ToString(), ((int)httpResponseMessage.StatusCode), starTime, endTime, 0, httpResponseMessage.ToString().Length, "", Headers_Params, null, traceContext.AsTraceAttributes());
             return httpResponseMessage;
         }
 

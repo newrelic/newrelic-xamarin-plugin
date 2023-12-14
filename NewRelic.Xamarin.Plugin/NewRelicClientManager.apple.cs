@@ -36,7 +36,7 @@ namespace NewRelic.Xamarin.Plugin
             { LogLevel.AUDIT, NewRelicXamarinIOS.NRLogLevels.Audit }
         };
 
-        private Dictionary<NetworkFailure, NewRelicXamarinIOS.NRNetworkFailureCode> networkFailureDict = new Dictionary<NetworkFailure,NewRelicXamarinIOS.NRNetworkFailureCode>()
+        private Dictionary<NetworkFailure, NewRelicXamarinIOS.NRNetworkFailureCode> networkFailureDict = new Dictionary<NetworkFailure, NewRelicXamarinIOS.NRNetworkFailureCode>()
         {
             { NetworkFailure.Unknown, NewRelicXamarinIOS.NRNetworkFailureCode.Unknown },
             { NetworkFailure.BadURL, NewRelicXamarinIOS.NRNetworkFailureCode.BadURL },
@@ -73,7 +73,7 @@ namespace NewRelic.Xamarin.Plugin
 
             NRIosAgent.EnableCrashReporting(agentConfig.crashReportingEnabled);
             NRIosAgent.SetPlatform(NewRelicXamarinIOS.NRMAApplicationPlatform.Xamarin);
-            NRIosAgent.SetPlatformVersion("0.0.1");
+            NRIosAgent.SetPlatformVersion("0.0.2");
 
             NewRelicXamarinIOS.NRLogger.SetLogLevels((uint)logLevelDict[agentConfig.logLevel]);
             if (!agentConfig.loggingEnabled)
@@ -154,7 +154,7 @@ namespace NewRelic.Xamarin.Plugin
             }
 
             return NRIosAgent.RecordBreadcrumb(name, NSDict);
-           
+
         }
 
         public bool RecordCustomEvent(string eventType, string eventName, Dictionary<string, object> attributes)
@@ -286,22 +286,22 @@ namespace NewRelic.Xamarin.Plugin
         public void RecordException(Exception exception)
         {
 
-              List<StackFrame> stackFrames = StackTraceParser.Parse(exception.StackTrace).ToList();
-                    var _stackFramesArray = new NSMutableArray();
-                    foreach (StackFrame length in stackFrames)
-                    {
-                        var stackFrameKeys = new object[] { "file", "line", "method", "class" };
-                        var stackFrameObjects = new object[] { length.FileName, length.LineNumber, length.MethodName, length.ClassName };
-                        NSDictionary dictionary = NSDictionary.FromObjectsAndKeys(stackFrameObjects, stackFrameKeys);
-                        _stackFramesArray.Add(dictionary);
-                    }
+            List<StackFrame> stackFrames = StackTraceParser.Parse(exception.StackTrace).ToList();
+            var _stackFramesArray = new NSMutableArray();
+            foreach (StackFrame length in stackFrames)
+            {
+                var stackFrameKeys = new object[] { "file", "line", "method", "class" };
+                var stackFrameObjects = new object[] { length.FileName, length.LineNumber, length.MethodName, length.ClassName };
+                NSDictionary dictionary = NSDictionary.FromObjectsAndKeys(stackFrameObjects, stackFrameKeys);
+                _stackFramesArray.Add(dictionary);
+            }
 
-                    var errorKeys = new object[] { "name", "reason", "cause", "fatal", "stackTraceElements" };
-                    var errorObjects = new object[] { exception.Message, exception.Message, exception.Message, false,_stackFramesArray};
-                    NSDictionary NSDict = NSDictionary.FromObjectsAndKeys(errorObjects, errorKeys);
+            var errorKeys = new object[] { "name", "reason", "cause", "fatal", "stackTraceElements" };
+            var errorObjects = new object[] { exception.Message, exception.Message, exception.Message, false, _stackFramesArray };
+            NSDictionary NSDict = NSDictionary.FromObjectsAndKeys(errorObjects, errorKeys);
 
-  
-                   NRIosAgent.RecordHandledExceptionWithStackTrace(NSDict);
+
+            NRIosAgent.RecordHandledExceptionWithStackTrace(NSDict);
         }
 
         public void HandleUncaughtException(bool shouldThrowFormattedException = true)
@@ -314,11 +314,11 @@ namespace NewRelic.Xamarin.Plugin
                 {
                     if (e.ExceptionObject is Exception exception)
                     {
-                       RecordException(exception);
+                        RecordException(exception);
                     }
                 };
             }
-        
+
         }
 
         public void TrackShellNavigatedEvents()
@@ -340,6 +340,16 @@ namespace NewRelic.Xamarin.Plugin
         {
             NRIosAgent.Shutdown();
             return;
+        }
+
+        public void addHTTPHeadersTrackingFor(List<string> headers)
+        {
+            NRIosAgent.AddHTTPHeaderTrackingFor(headers.ToArray());
+        }
+
+        public List<string> getHTTPHeadersTrackingFor()
+        {
+            throw new NotImplementedException();
         }
     }
 }

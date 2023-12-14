@@ -265,6 +265,11 @@ namespace NewRelic.Xamarin.Plugin
         /// </summary>
         void Shutdown();
 
+        void addHTTPHeadersTrackingFor(List<String> headers);
+
+        List<String> getHTTPHeadersTrackingFor();
+
+
     }
 
 }
