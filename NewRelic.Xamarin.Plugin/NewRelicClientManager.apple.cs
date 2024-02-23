@@ -73,8 +73,35 @@ namespace NewRelic.Xamarin.Plugin
 
             NRIosAgent.EnableCrashReporting(agentConfig.crashReportingEnabled);
             NRIosAgent.SetPlatform(NewRelicXamarinIOS.NRMAApplicationPlatform.Xamarin);
-            NRIosAgent.SetPlatformVersion("0.0.2");
+            NRIosAgent.SetPlatformVersion("0.0.3");
 
+            if (!agentConfig.networkErrorRequestEnabled)
+            {
+                NRIosAgent.DisableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.RequestErrorEvents);
+            }
+
+            if (!agentConfig.networkRequestEnabled)
+            {
+                NRIosAgent.DisableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.NetworkRequestEvents);
+            }
+
+            if (!agentConfig.interactionTracingEnabled)
+            {
+                NRIosAgent.DisableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.InteractionTracing);
+                NRIosAgent.DisableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.DefaultInteractions);
+            }
+
+            if (!agentConfig.webViewInstrumentation)
+            {
+                NRIosAgent.DisableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.WebViewInstrumentation);
+            }
+
+            if (agentConfig.fedRampEnabled)
+            {
+                NRIosAgent.EnableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.FedRampEnabled);
+            }
+
+          
             NewRelicXamarinIOS.NRLogger.SetLogLevels((uint)logLevelDict[agentConfig.logLevel]);
             if (!agentConfig.loggingEnabled)
             {
