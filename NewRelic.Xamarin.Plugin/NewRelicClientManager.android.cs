@@ -93,9 +93,35 @@ namespace NewRelic.Xamarin.Plugin
             {
                 NRAndroidAgent.DisableFeature(Com.Newrelic.Agent.Android.FeatureFlag.CrashReporting);
             }
+            if (!agentConfig.analyticsEventEnabled)
+            {
+                NRAndroidAgent.DisableFeature(Com.Newrelic.Agent.Android.FeatureFlag.AnalyticsEvents);
+            }
+
+            if (!agentConfig.networkErrorRequestEnabled)
+            {
+                NRAndroidAgent.DisableFeature(Com.Newrelic.Agent.Android.FeatureFlag.NetworkErrorRequests);
+            }
+
+            if (!agentConfig.networkRequestEnabled)
+            {
+                NRAndroidAgent.DisableFeature(Com.Newrelic.Agent.Android.FeatureFlag.NetworkRequests);
+            }
+
+            if (!agentConfig.interactionTracingEnabled)
+            {
+                NRAndroidAgent.DisableFeature(Com.Newrelic.Agent.Android.FeatureFlag.InteractionTracing);
+                NRAndroidAgent.DisableFeature(Com.Newrelic.Agent.Android.FeatureFlag.DefaultInteractions);
+
+            }
+
+            if (agentConfig.fedRampEnabled)
+            {
+                NRAndroidAgent.EnableFeature(Com.Newrelic.Agent.Android.FeatureFlag.FedRampEnabled);
+            }
 
             var newRelic = NRAndroidAgent.WithApplicationToken(applicationToken)
-                .WithApplicationFramework(Com.Newrelic.Agent.Android.ApplicationFramework.Xamarin, "0.0.2")
+                .WithApplicationFramework(Com.Newrelic.Agent.Android.ApplicationFramework.Xamarin, "0.0.3")
                 .WithLoggingEnabled(agentConfig.loggingEnabled)
                 .WithLogLevel(logLevelDict[agentConfig.logLevel]);
 

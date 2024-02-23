@@ -6,9 +6,9 @@
 		<RootNamespace>NewRelic.Xamarin.Plugin</RootNamespace>
 		<PackageId>NewRelic.Xamarin.Plugin</PackageId>
 		<Product>$(AssemblyName) ($(TargetFramework))</Product>
-		<AssemblyVersion>0.0.2</AssemblyVersion>
-		<AssemblyFileVersion>0.0.2</AssemblyFileVersion>
-		<Version>0.0.2</Version>
+		<AssemblyVersion>0.0.3</AssemblyVersion>
+		<AssemblyFileVersion>0.0.3</AssemblyFileVersion>
+		<Version>0.0.3</Version>
 		<PackOnBuild>true</PackOnBuild>
 		<NeutralLanguage>en</NeutralLanguage>
 		<LangVersion>default</LangVersion>

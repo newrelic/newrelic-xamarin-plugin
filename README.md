@@ -50,9 +50,9 @@ using NewRelic.Xamarin.Plugin;
 
       CrossNewRelicClient.Current.HandleUncaughtException();
       CrossNewRelicClient.Current.TrackShellNavigatedEvents()
-      // Set optional agent configuration
-      // Options are: crashReportingEnabled, loggingEnabled, logLevel, collectorAddress, crashCollectorAddress
-      // AgentStartConfiguration agentConfig = new AgentStartConfiguration(true, true, LogLevel.INFO, "mobile-collector.newrelic.com", "mobile-crash.newrelic.com");
+      // Set optional agent configuration    
+      // Options are: crashReportingEnabled, loggingEnabled, logLevel, collectorAddress, crashCollectorAddress,analyticsEventEnabled, networkErrorRequestEnabled, networkRequestEnabled, interactionTracingEnabled,webViewInstrumentation, fedRampEnabled
+      // AgentStartConfiguration agentConfig = new AgentStartConfiguration(crashReportingEnabled:false);
       if (Device.RuntimePlatform == Device.Android) 
       {
         CrossNewRelicClient.Current.Start("<APP-TOKEN-HERE>");
