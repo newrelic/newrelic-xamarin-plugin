@@ -99,9 +99,11 @@ namespace NewRelic.Xamarin.Plugin
 
 
 
+
         public AgentStartConfiguration(bool crashReportingEnabled = true, bool loggingEnabled = true, LogLevel logLevel = LogLevel.INFO, string collectorAddress = "DEFAULT",
             string crashCollectorAddress = "DEFAULT", bool analyticsEventEnabled = true, bool networkErrorRequestEnabled = true, bool networkRequestEnabled = true,
             bool interactionTracingEnabled = false, bool webViewInstrumentation = true, bool fedRampEnabled = false, bool offlineStorageEnabled = true)
+
         {
             this.crashReportingEnabled = crashReportingEnabled;
             this.loggingEnabled = loggingEnabled;
@@ -115,6 +117,7 @@ namespace NewRelic.Xamarin.Plugin
             this.webViewInstrumentation = webViewInstrumentation;
             this.fedRampEnabled = fedRampEnabled;
             this.offlineStorageEnabled = offlineStorageEnabled;
+
         }
     }
 

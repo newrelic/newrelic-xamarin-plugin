@@ -120,6 +120,7 @@ namespace NewRelic.Xamarin.Plugin
                 NRAndroidAgent.EnableFeature(Com.Newrelic.Agent.Android.FeatureFlag.FedRampEnabled);
             }
 
+
             if (agentConfig.offlineStorageEnabled)
             {
                 NRAndroidAgent.EnableFeature(Com.Newrelic.Agent.Android.FeatureFlag.OfflineStorage);

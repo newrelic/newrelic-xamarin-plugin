@@ -73,7 +73,20 @@ namespace NewRelic.Xamarin.Plugin
 
             NRIosAgent.EnableCrashReporting(agentConfig.crashReportingEnabled);
             NRIosAgent.SetPlatform(NewRelicXamarinIOS.NRMAApplicationPlatform.Xamarin);
-            NRIosAgent.SetPlatformVersion("0.0.3");
+            NRIosAgent.SetPlatformVersion("0.0.4");
+
+            if (agentConfig.fedRampEnabled)
+            {
+                NRIosAgent.EnableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.FedRampEnabled);
+            }
+
+            if (agentConfig.offlineStorageEnabled)
+            {
+                NRIosAgent.EnableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.OfflineStorage);
+            } else
+            {
+                NRIosAgent.DisableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.OfflineStorage);
+            }
 
             if (!agentConfig.networkErrorRequestEnabled)
             {
@@ -96,21 +109,7 @@ namespace NewRelic.Xamarin.Plugin
                 NRIosAgent.DisableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.WebViewInstrumentation);
             }
 
-            if (agentConfig.fedRampEnabled)
-            {
-                NRIosAgent.EnableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.FedRampEnabled);
-            }
-
-            if (agentConfig.offlineStorageEnabled)
-            {
-                NRIosAgent.EnableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.OfflineStorage);
-            } else
-            {
-                NRIosAgent.DisableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.OfflineStorage);
-            }
-
-
-
+          
             NewRelicXamarinIOS.NRLogger.SetLogLevels((uint)logLevelDict[agentConfig.logLevel]);
             if (!agentConfig.loggingEnabled)
             {
