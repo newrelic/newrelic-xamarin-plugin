@@ -101,7 +101,16 @@ namespace NewRelic.Xamarin.Plugin
                 NRIosAgent.EnableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.FedRampEnabled);
             }
 
-          
+            if (agentConfig.offlineStorageEnabled)
+            {
+                NRIosAgent.EnableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.OfflineStorage);
+            } else
+            {
+                NRIosAgent.DisableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.OfflineStorage);
+            }
+
+
+
             NewRelicXamarinIOS.NRLogger.SetLogLevels((uint)logLevelDict[agentConfig.logLevel]);
             if (!agentConfig.loggingEnabled)
             {
@@ -378,6 +387,13 @@ namespace NewRelic.Xamarin.Plugin
         {
             throw new NotImplementedException();
         }
+
+        public void SetMaxOfflineStorageSize(int megabytes)
+        {
+            NRIosAgent.SetMaxOfflineStorageSize((uint)megabytes);
+            return;
+        }
+
     }
 }
 

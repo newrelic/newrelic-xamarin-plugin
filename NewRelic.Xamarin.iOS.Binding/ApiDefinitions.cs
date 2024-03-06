@@ -95,6 +95,21 @@ namespace NewRelicXamarinIOS
         [Static]
         [Export("logLevels")]
         NRLogLevels LogLevels { get; }
+        
+        // +(void)setLogIngestKey:(NSString *)key;
+        [Static]
+        [Export ("setLogIngestKey:")]
+        void SetLogIngestKey (string key);
+
+        // +(void)setLogURL:(NSString *)url;
+        [Static]
+        [Export ("setLogURL:")]
+        void SetLogURL (string url);
+        
+        // +(void)upload;
+        [Static]
+        [Export ("upload")]
+        void Upload ();
     }
 
     // @protocol NewRelicCustomInteractionInterface
@@ -131,7 +146,7 @@ namespace NewRelicXamarinIOS
         [Static]
         [Export("crashNow")]
         void CrashNow();
-
+        
         // +(void)enableFeatures:(NRMAFeatureFlags)featureFlags;
         [Static]
         [Export("enableFeatures:")]
@@ -291,6 +306,11 @@ namespace NewRelicXamarinIOS
         [Static]
         [Export("setMaxEventPoolSize:")]
         void SetMaxEventPoolSize(uint size);
+        
+        // +(void)setMaxOfflineStorageSize:(unsigned int)megaBytes;
+        [Static]
+        [Export ("setMaxOfflineStorageSize:")]
+        void SetMaxOfflineStorageSize (uint megaBytes);
 
         // +(BOOL)setAttribute:(NSString * _Nonnull)name value:(id _Nonnull)value;
         [Static]
