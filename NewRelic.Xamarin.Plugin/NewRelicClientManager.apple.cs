@@ -73,7 +73,20 @@ namespace NewRelic.Xamarin.Plugin
 
             NRIosAgent.EnableCrashReporting(agentConfig.crashReportingEnabled);
             NRIosAgent.SetPlatform(NewRelicXamarinIOS.NRMAApplicationPlatform.Xamarin);
-            NRIosAgent.SetPlatformVersion("0.0.3");
+            NRIosAgent.SetPlatformVersion("0.0.4");
+
+            if (agentConfig.fedRampEnabled)
+            {
+                NRIosAgent.EnableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.FedRampEnabled);
+            }
+
+            if (agentConfig.offlineStorageEnabled)
+            {
+                NRIosAgent.EnableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.OfflineStorage);
+            } else
+            {
+                NRIosAgent.DisableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.OfflineStorage);
+            }
 
             if (!agentConfig.networkErrorRequestEnabled)
             {
@@ -378,6 +391,13 @@ namespace NewRelic.Xamarin.Plugin
         {
             throw new NotImplementedException();
         }
+
+        public void SetMaxOfflineStorageSize(int megabytes)
+        {
+            NRIosAgent.SetMaxOfflineStorageSize((uint)megabytes);
+            return;
+        }
+
     }
 }
 

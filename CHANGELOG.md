@@ -1,5 +1,14 @@
 # Changelog
 
+# 0.0.4
+New in this release
+
+- Added Offline Monitoring Feature: This new feature enables the preservation of harvest data that would otherwise be lost when the application lacks an internet connection. The stored harvests will be sent once the internet connection is re-established and the next harvest upload is successful.
+- Introduced setMaxOfflineStorageSize API: This new API allows the user to determine the maximum volume of data that can be stored locally. This aids in better management and control of local data storage.
+- Updated native iOS Agent: We've upgraded the native iOS agent to version 7.4.9, which includes performance improvements and bug fixes.
+- Updated native Android Agent: We've also upgraded the native Android agent to version 7.3.0 bringing benefits like improved stability and enhanced features.
+
+
 # 0.0.3
 New in this release
 - Added agent configuration for events, tracing, and FedRAMP compliance.

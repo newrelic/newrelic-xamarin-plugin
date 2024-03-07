@@ -120,8 +120,17 @@ namespace NewRelic.Xamarin.Plugin
                 NRAndroidAgent.EnableFeature(Com.Newrelic.Agent.Android.FeatureFlag.FedRampEnabled);
             }
 
+            if (agentConfig.offlineStorageEnabled)
+            {
+                NRAndroidAgent.EnableFeature(Com.Newrelic.Agent.Android.FeatureFlag.OfflineStorage);
+            }
+            else
+            {
+                NRAndroidAgent.DisableFeature(Com.Newrelic.Agent.Android.FeatureFlag.OfflineStorage);
+            }
+
             var newRelic = NRAndroidAgent.WithApplicationToken(applicationToken)
-                .WithApplicationFramework(Com.Newrelic.Agent.Android.ApplicationFramework.Xamarin, "0.0.3")
+                .WithApplicationFramework(Com.Newrelic.Agent.Android.ApplicationFramework.Xamarin, "0.0.4")
                 .WithLoggingEnabled(agentConfig.loggingEnabled)
                 .WithLogLevel(logLevelDict[agentConfig.logLevel]);
 
@@ -410,6 +419,12 @@ namespace NewRelic.Xamarin.Plugin
         public List<string> getHTTPHeadersTrackingFor()
         {
             return Com.Newrelic.Agent.Android.HttpHeaders.Instance.GetHttpHeaders().ToList();
+        }
+
+        public void SetMaxOfflineStorageSize(int megabytes)
+        {
+            NRAndroidAgent.SetMaxOfflineStorageSize(megabytes);
+            return;
         }
     }
 }
