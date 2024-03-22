@@ -6,9 +6,9 @@
 		<RootNamespace>NewRelic.Xamarin.Plugin</RootNamespace>
 		<PackageId>NewRelic.Xamarin.Plugin</PackageId>
 		<Product>$(AssemblyName) ($(TargetFramework))</Product>
-		<AssemblyVersion>0.0.4</AssemblyVersion>
-		<AssemblyFileVersion>0.0.4</AssemblyFileVersion>
-		<Version>0.0.4</Version>
+		<AssemblyVersion>0.0.5</AssemblyVersion>
+		<AssemblyFileVersion>0.0.5</AssemblyFileVersion>
+		<Version>0.0.5</Version>
 		<PackOnBuild>true</PackOnBuild>
 		<NeutralLanguage>en</NeutralLanguage>
 		<LangVersion>default</LangVersion>
@@ -59,7 +59,7 @@
 		<Compile Include="**\*.android.*.cs" />
 	</ItemGroup>
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
-		<PackageReference Include="NewRelic.Xamarin.iOS.Binding" Version="7.4.9" />
+		<PackageReference Include="NewRelic.Xamarin.iOS.Binding" Version="7.4.10" />
 		<Compile Include="**\*.apple.cs" />
 		<Compile Include="**\*.apple.*.cs" />
 	</ItemGroup>
