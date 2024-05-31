@@ -15,6 +15,7 @@ This plugin allows you to instrument Xamarin Forms, iOS and Android apps with he
 * Pass user information to New Relic to track user sessions
 * Screen Tracking
 * Offline Monitoring for Events and Exceptions
+* Capture Background Events when app is in background
 
 ## Current Support:
 
@@ -52,7 +53,7 @@ using NewRelic.Xamarin.Plugin;
       CrossNewRelicClient.Current.HandleUncaughtException();
       CrossNewRelicClient.Current.TrackShellNavigatedEvents()
       // Set optional agent configuration    
-      // Options are: crashReportingEnabled, loggingEnabled, logLevel, collectorAddress, crashCollectorAddress,analyticsEventEnabled, networkErrorRequestEnabled, networkRequestEnabled, interactionTracingEnabled,webViewInstrumentation, fedRampEnabled
+      // Options are: crashReportingEnabled, loggingEnabled, logLevel, collectorAddress, crashCollectorAddress,analyticsEventEnabled, networkErrorRequestEnabled, networkRequestEnabled, interactionTracingEnabled,webViewInstrumentation, fedRampEnabled,offlineStorageEnabled,newEventSystemEnabled,backgroundReportingEnabled
       // AgentStartConfiguration agentConfig = new AgentStartConfiguration(crashReportingEnabled:false);
       if (Device.RuntimePlatform == Device.Android) 
       {

@@ -88,6 +88,22 @@ namespace NewRelic.Xamarin.Plugin
                 NRIosAgent.DisableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.OfflineStorage);
             }
 
+            if (agentConfig.newEventSystemEnabled)
+            {
+                NRIosAgent.EnableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.NewEventSystem);
+            } else
+            {
+                NRIosAgent.DisableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.NewEventSystem);
+            }
+
+            if (agentConfig.backgroundReportingEnabled)
+            {
+                NRIosAgent.EnableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.BackgroundReporting);
+            } else
+            {
+                NRIosAgent.DisableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.BackgroundReporting);
+            }
+
             if (!agentConfig.networkErrorRequestEnabled)
             {
                 NRIosAgent.DisableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.RequestErrorEvents);
