@@ -30,7 +30,9 @@ namespace NewRelicXamarinIOS
         FedRampEnabled = 1uL << 17,
         SwiftAsyncURLSessionSupport = 1uL << 18,
         NewEventSystem = 1uL << 20,
-        OfflineStorage = 1uL << 21
+        OfflineStorage = 1uL << 21,
+        BackgroundReporting = 1uL << 22
+
     }
     [Native]
     public enum NRMAApplicationPlatform : ulong
@@ -116,6 +118,7 @@ namespace NewRelicXamarinIOS
         Info = 1 << 2,
         Verbose = 1 << 3,
         Audit = 1 << 4,
+        Debug = 1 << 5,
         All = 65535
     }
 
