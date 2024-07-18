@@ -432,6 +432,30 @@ This plugin also provides a method to manually record any handled exceptions as 
 - ### No Http data appears:
   - To instrument http data, make sure to use the HttpMessageHandler in HttpClient
 
+- ### iOS App Crashes on Null Pointer Exception Recording
+
+### Issue
+The app may crash on iOS when recording a Null Pointer Exception.
+
+### Solution
+Initialize the agent in AppDelegate.cs instead of App.xaml.cs.
+
+### Implementation
+Add the following code to your AppDelegate.cs file:
+
+```csharp
+public override bool FinishedLaunching(UIApplication app, NSDictionary options)
+{
+    Mono.Runtime.RemoveSignalHandlers();
+    NRIosAgent.StartWithApplicationToken("<APP-TOKEN-HERE>");
+    Mono.Runtime.InstallSignalHandlers();
+    return base.FinishedLaunching(app, options);
+}
+```
+Additional Information
+For more details on handling signals and third-party crash reporters, refer to the Mono documentation on Signals and third-party crash reporters.["Mono Documentation"](https://www.mono-project.com/docs/advanced/runtime/docs/signals/)]
+
+
 ## Support
 
 New Relic hosts and moderates an online forum where customers can interact with New Relic employees as well as other customers to get help and share best practices. Like all official New Relic open source projects, there's a related Community topic in the New Relic Explorers Hub. You can find this project's topic/threads here:
