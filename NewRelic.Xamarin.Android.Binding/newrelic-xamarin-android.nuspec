@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>NewRelic.Xamarin.Android.Binding</id>
-    <version>7.3.0.1</version>
+    <version>7.5.0</version>
     <authors>New Relic</authors>
     <owners>New Relic</owners>
     <projectUrl>https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobile-xamarin/monitor-your-xamarin-application/</projectUrl>

@@ -274,7 +274,40 @@ namespace NewRelic.Xamarin.Plugin
         /// <param name="megabytes"> Maximum size of total data that can be stored for offline storage.</param>
         void SetMaxOfflineStorageSize(int megabytes);
 
+        /// <summary>
+        /// To log informational messages. It takes a string message as an argument. 
+        /// </summary>
+        void LogInfo(String message);
+        
+        /// <summary>
+        /// To log Error messages. It takes a string message as an argument. 
+        /// </summary>
+        void LogError(String message);
+        
+        /// <summary>
+        /// To log verbose messages, which are typically detailed and diagnostic in nature. It takes a string message as an argument. 
+        /// </summary>
+        void LogVerbose(String message);
+        
+        /// <summary>
+        /// To log warning messages, which are typically detailed and diagnostic in nature. It takes a string message as an argument. 
+        /// </summary>
+        void LogWarning(String message);
+        
+        /// <summary>
+        /// To log debug messages, which are usually used for debugging purposes. It takes a string message as an argument. 
+        /// </summary>
+        void LogDebug(String message);
 
+        /// <summary>
+        /// To Log messages with a specific log level. It takes a log level and a string message as arguments.
+        /// </summary>
+        void Log(LogLevel level, String message);
+
+        /// <summary>
+        /// To  log a set of attributes. It takes a dictionary of string keys and object values as an argument.
+        /// </summary>
+        void LogAttributes(Dictionary<string, object> attributes);
     }
 
 }
