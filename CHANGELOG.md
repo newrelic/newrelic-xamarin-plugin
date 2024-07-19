@@ -18,6 +18,7 @@
 - Native Android agent updated to version 7.5.0
 - Native iOS agent updated to version 7.5.0
 
+
 # 0.0.6
 New in this release
 
