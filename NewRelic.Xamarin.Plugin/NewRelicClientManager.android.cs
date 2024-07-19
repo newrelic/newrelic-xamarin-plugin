@@ -16,6 +16,7 @@ using Android.Runtime;
 using Xamarin.Forms;
 using NRNetworkFailure = Com.Newrelic.Agent.Android.Util.NetworkFailure;
 using NRMetricUnit = Com.Newrelic.Agent.Android.Metric.MetricUnit;
+using NRLogLevel = Com.Newrelic.Agent.Android.Logging.LogLevel;
 
 namespace NewRelic.Xamarin.Plugin
 {
@@ -129,8 +130,17 @@ namespace NewRelic.Xamarin.Plugin
                 NRAndroidAgent.DisableFeature(Com.Newrelic.Agent.Android.FeatureFlag.OfflineStorage);
             }
 
+            if (agentConfig.backgroundReportingEnabled)
+            {
+                NRAndroidAgent.EnableFeature(Com.Newrelic.Agent.Android.FeatureFlag.BackgroundReporting);
+            }
+            else
+            {
+                NRAndroidAgent.EnableFeature(Com.Newrelic.Agent.Android.FeatureFlag.BackgroundReporting);
+            }
+
             var newRelic = NRAndroidAgent.WithApplicationToken(applicationToken)
-                .WithApplicationFramework(Com.Newrelic.Agent.Android.ApplicationFramework.Xamarin, "0.0.4")
+                .WithApplicationFramework(Com.Newrelic.Agent.Android.ApplicationFramework.Xamarin, "1.0.0")
                 .WithLoggingEnabled(agentConfig.loggingEnabled)
                 .WithLogLevel(logLevelDict[agentConfig.logLevel]);
 
@@ -191,44 +201,12 @@ namespace NewRelic.Xamarin.Plugin
 
         public bool RecordBreadcrumb(string name, Dictionary<string, object> attributes)
         {
-            Dictionary<string, Java.Lang.Object> strToJavaObject = new Dictionary<string, Java.Lang.Object>();
-            foreach (KeyValuePair<string, object> entry in attributes)
-            {
-                if (entry.Value is bool)
-                {
-                    strToJavaObject.Add(entry.Key, (bool)entry.Value);
-                }
-                else if (IsNumeric(entry.Value))
-                {
-                    strToJavaObject.Add(entry.Key, Convert.ToDouble(entry.Value));
-                }
-                else
-                {
-                    strToJavaObject.Add(entry.Key, entry.Value.ToString());
-                }
-            }
-            return NRAndroidAgent.RecordBreadcrumb(name, strToJavaObject);
+            return NRAndroidAgent.RecordBreadcrumb(name, ConvertAttributesToJavaObjects(attributes));
         }
 
         public bool RecordCustomEvent(string eventType, string eventName, Dictionary<string, object> attributes)
         {
-            Dictionary<string, Java.Lang.Object> strToJavaObject = new Dictionary<string, Java.Lang.Object>();
-            foreach (KeyValuePair<string, object> entry in attributes)
-            {
-                if (entry.Value is bool)
-                {
-                    strToJavaObject.Add(entry.Key, (bool)entry.Value);
-                }
-                else if (IsNumeric(entry.Value))
-                {
-                    strToJavaObject.Add(entry.Key, Convert.ToDouble(entry.Value));
-                }
-                else
-                {
-                    strToJavaObject.Add(entry.Key, entry.Value.ToString());
-                }
-            }
-            return NRAndroidAgent.RecordCustomEvent(eventType, eventName, strToJavaObject);
+            return NRAndroidAgent.RecordCustomEvent(eventType, eventName, ConvertAttributesToJavaObjects(attributes));
         }
 
         public void RecordMetric(string name, string category)
@@ -426,5 +404,128 @@ namespace NewRelic.Xamarin.Plugin
             NRAndroidAgent.SetMaxOfflineStorageSize(megabytes);
             return;
         }
+
+        public void LogInfo(String message)
+        {
+            if (!string.IsNullOrEmpty(message))
+            {
+                NRAndroidAgent.LogInfo(message);
+            }
+            else
+            {
+                Console.WriteLine("Info: Message is empty or null.");
+            }
+        }
+
+        public void LogWarning(String message)
+        {
+            if (!string.IsNullOrEmpty(message))
+            {
+                NRAndroidAgent.LogWarning(message);
+            }
+            else
+            {
+                Console.WriteLine("Warning: Message is empty or null.");
+            }
+        }
+
+        public void LogDebug(String message)
+        {
+            if (!string.IsNullOrEmpty(message))
+            {
+                NRAndroidAgent.LogDebug(message);
+            }
+            else
+            {
+                Console.WriteLine("Debug: Message is empty or null.");
+            }
+        }
+
+        public void LogVerbose(String message)
+        {
+            if (!string.IsNullOrEmpty(message))
+            {
+                NRAndroidAgent.LogVerbose(message);
+            }
+            else
+            {
+                Console.WriteLine("Verbose: Message is empty or null.");
+            }
+        }
+
+        public void LogError(String message)
+        {
+            if (!string.IsNullOrEmpty(message))
+            {
+                NRAndroidAgent.LogError(message);
+            }
+            else
+            {
+                Console.WriteLine("Error: Message is empty or null.");
+            }
+        }
+
+        public void Log(LogLevel level, String message)
+        {
+            if (!string.IsNullOrEmpty(message))
+            {
+                NRLogLevel logLevel = level switch
+                {
+                    LogLevel.INFO => NRLogLevel.Info,
+                    LogLevel.AUDIT => NRLogLevel.Verbose,
+                    LogLevel.ERROR => NRLogLevel.Error,
+                    LogLevel.VERBOSE => NRLogLevel.Verbose,
+                    LogLevel.WARNING => NRLogLevel.Warn,
+                    _ => NRLogLevel.Error
+                };
+                NRAndroidAgent.Log(logLevel, message);
+            }
+            else
+            {
+                Console.WriteLine($"Log Level {level}: Message is empty or null.");
+            }
+        }
+
+
+
+        public void LogAttributes(Dictionary<string, object> attributes)
+        {
+            if (attributes != null && attributes.Count > 0)
+            {
+                NRAndroidAgent.LogAttributes(ConvertAttributesToJavaObjects(attributes));
+            }
+            else
+            {
+                Console.WriteLine("Attributes are empty or null.");
+            }
+        }
+
+        public Dictionary<string, Java.Lang.Object> ConvertAttributesToJavaObjects(Dictionary<string, object> attributes)
+        {
+            Dictionary<string, Java.Lang.Object> strToJavaObject = new Dictionary<string, Java.Lang.Object>();
+            foreach (KeyValuePair<string, object> entry in attributes)
+            {
+                if (entry.Value is bool)
+                {
+                    strToJavaObject.Add(entry.Key, (bool)entry.Value);
+                }
+                else if (IsNumeric(entry.Value))
+                {
+                    strToJavaObject.Add(entry.Key, Convert.ToDouble(entry.Value));
+                }
+                else
+                {
+                    strToJavaObject.Add(entry.Key, entry.Value.ToString());
+                }
+            }
+            return strToJavaObject;
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }

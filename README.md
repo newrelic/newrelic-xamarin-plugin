@@ -349,6 +349,55 @@ or [Android SDK](https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobi
     CrossNewRelicClient.Current.SetMaxOfflineStorageSize(200);
 ```
 
+### LogInfo(String message) : void
+
+> Logs an informational message to the New Relic log.
+``` C#
+    CrossNewRelicClient.Current.LogInfo("This is an informational message");
+```
+
+### LogError(String message) : void
+> Logs an error message to the New Relic log.
+``` C#
+    CrossNewRelicClient.Current.LogError("This is an error message");
+```
+### LogVerbose(String message) : void
+> Logs a verbose message to the New Relic log.
+``` C#
+    CrossNewRelicClient.Current.LogVerbose("This is a verbose message");
+```
+
+### LogWarning(String message) : void
+> Logs a warning message to the New Relic log.
+``` C#
+    CrossNewRelicClient.Current.LogWarning("This is a warning message");
+```
+
+### LogDebug(String message) : void
+> Logs a debug message to the New Relic log.
+``` C#
+    CrossNewRelicClient.Current.LogDebug("This is a debug message");
+```
+
+### Log(LogLevel level, String message) : void
+> Logs a message to the New Relic log with a specified log level.
+``` C#
+    CrossNewRelicClient.Current.Log(LogLevel.Info, "This is an informational message");
+``` 
+
+### LogAttributes(Dictionary<string, object> attributes) : void
+> Logs a message with attributes to the New Relic log.
+``` C#
+    CrossNewRelicClient.Current.LogAttributes(new Dictionary<string, object>()
+        {
+            {"BreadNumValue", 12.3 },
+            {"BreadStrValue", "XamBread" },
+            {"BreadBoolValue", true },
+            {"message", "This is a message with attributes" }
+        }
+    );
+```
+
 ## Error reporting
 
 This plugin provides a handler to record unhandled exceptions to New Relic. It is recommended to initialize the handler prior to starting the agent.
@@ -382,6 +431,30 @@ This plugin also provides a method to manually record any handled exceptions as 
 
 - ### No Http data appears:
   - To instrument http data, make sure to use the HttpMessageHandler in HttpClient
+
+- ### iOS App Crashes on Null Pointer Exception Recording
+
+### Issue
+The app may crash on iOS when recording a Null Pointer Exception.
+
+### Solution
+Initialize the agent in AppDelegate.cs instead of App.xaml.cs.
+
+### Implementation
+Add the following code to your AppDelegate.cs file:
+
+```csharp
+public override bool FinishedLaunching(UIApplication app, NSDictionary options)
+{
+    Mono.Runtime.RemoveSignalHandlers();
+    NRIosAgent.StartWithApplicationToken("<APP-TOKEN-HERE>");
+    Mono.Runtime.InstallSignalHandlers();
+    return base.FinishedLaunching(app, options);
+}
+```
+Additional Information
+For more details on handling signals and third-party crash reporters, refer to the Mono documentation on Signals and third-party crash reporters.["Mono Documentation"](https://www.mono-project.com/docs/advanced/runtime/docs/signals/)]
+
 
 ## Support
 

@@ -73,7 +73,7 @@ namespace NewRelic.Xamarin.Plugin
 
             NRIosAgent.EnableCrashReporting(agentConfig.crashReportingEnabled);
             NRIosAgent.SetPlatform(NewRelicXamarinIOS.NRMAApplicationPlatform.Xamarin);
-            NRIosAgent.SetPlatformVersion("0.0.4");
+            NRIosAgent.SetPlatformVersion("1.0.0");
 
             if (agentConfig.fedRampEnabled)
             {
@@ -130,12 +130,14 @@ namespace NewRelic.Xamarin.Plugin
                 NRIosAgent.EnableFeatures(NewRelicXamarinIOS.NRMAFeatureFlags.FedRampEnabled);
             }
 
-          
+
+
             NewRelicXamarinIOS.NRLogger.SetLogLevels((uint)logLevelDict[agentConfig.logLevel]);
             if (!agentConfig.loggingEnabled)
             {
                 NewRelicXamarinIOS.NRLogger.SetLogLevels((uint)NewRelicXamarinIOS.NRLogLevels.None);
             }
+            Mono.Runtime.RemoveSignalHandlers();
 
             if (agentConfig.collectorAddress.Equals("DEFAULT") && agentConfig.crashCollectorAddress.Equals("DEFAULT"))
             {
@@ -149,6 +151,8 @@ namespace NewRelic.Xamarin.Plugin
                     "mobile-crash.newrelic.com" : agentConfig.crashCollectorAddress;
                 NRIosAgent.StartWithApplicationToken(applicationToken, collectorAddress, crashCollectorAddress);
             }
+            Mono.Runtime.RemoveSignalHandlers();
+
         }
 
         public void CrashNow(string message = "")
@@ -202,25 +206,13 @@ namespace NewRelic.Xamarin.Plugin
 
         public bool RecordBreadcrumb(string name, Dictionary<string, object> attributes)
         {
-
-            Foundation.NSMutableDictionary NSDict = new Foundation.NSMutableDictionary();
-            foreach (KeyValuePair<string, object> entry in attributes)
-            {
-                NSDict.Add(Foundation.NSObject.FromObject(entry.Key), Foundation.NSObject.FromObject(entry.Value));
-            }
-
-            return NRIosAgent.RecordBreadcrumb(name, NSDict);
+            return NRIosAgent.RecordBreadcrumb(name, ConvertAttributesToNSDictionary(attributes));
 
         }
 
         public bool RecordCustomEvent(string eventType, string eventName, Dictionary<string, object> attributes)
         {
-            Foundation.NSMutableDictionary NSDict = new Foundation.NSMutableDictionary();
-            foreach (KeyValuePair<string, object> entry in attributes)
-            {
-                NSDict.Add(Foundation.NSObject.FromObject(entry.Key), Foundation.NSObject.FromObject(entry.Value));
-            }
-            return NRIosAgent.RecordCustomEvent(eventType, eventName, NSDict);
+            return NRIosAgent.RecordCustomEvent(eventType, eventName, ConvertAttributesToNSDictionary(attributes));
         }
 
         public void RecordMetric(string name, string category)
@@ -362,6 +354,7 @@ namespace NewRelic.Xamarin.Plugin
 
         public void HandleUncaughtException(bool shouldThrowFormattedException = true)
         {
+
             if (!_isUncaughtExceptionHandled)
             {
                 _isUncaughtExceptionHandled = true;
@@ -412,6 +405,111 @@ namespace NewRelic.Xamarin.Plugin
         {
             NRIosAgent.SetMaxOfflineStorageSize((uint)megabytes);
             return;
+        }
+
+        public void LogInfo(String message)
+        {
+            if (!string.IsNullOrEmpty(message))
+            {
+                NRIosAgent.LogInfo(message);
+            }
+            else
+            {
+                Console.WriteLine("Info: Message is empty or null.");
+            }
+        }
+
+        public void LogWarning(String message)
+        {
+            if (!string.IsNullOrEmpty(message))
+            {
+                NRIosAgent.LogWarning(message);
+            }
+            else
+            {
+                Console.WriteLine("Warning: Message is empty or null.");
+            }
+        }
+
+        public void LogDebug(String message)
+        {
+            if (!string.IsNullOrEmpty(message))
+            {
+                NRIosAgent.LogDebug(message);
+            }
+            else
+            {
+                Console.WriteLine("Debug: Message is empty or null.");
+            }
+        }
+
+        public void LogVerbose(String message)
+        {
+            if (!string.IsNullOrEmpty(message))
+            {
+                NRIosAgent.LogVerbose(message);
+            }
+            else
+            {
+                Console.WriteLine("Verbose: Message is empty or null.");
+            }
+        }
+
+        public void LogError(String message)
+        {
+            if (!string.IsNullOrEmpty(message))
+            {
+                NRIosAgent.LogError(message);
+            }
+            else
+            {
+                Console.WriteLine("Error: Message is empty or null.");
+            }
+        }
+
+        public void Log(LogLevel level, String message)
+        {
+            if (!string.IsNullOrEmpty(message))
+            {
+                Dictionary<string, object> attributes = new Dictionary<string, object>();
+                attributes.Add("Message", message);
+                attributes.Add("logLevel", level.ToString());
+
+                NRIosAgent.LogAll(ConvertAttributesToNSDictionary(attributes));
+            }
+            else
+            {
+                Console.WriteLine($"Log Level {level}: Message is empty or null.");
+            }
+        }
+
+
+
+        public void LogAttributes(Dictionary<string, object> attributes)
+        {
+            if (attributes != null && attributes.Count > 0)
+            {
+                NRIosAgent.LogAttributes(ConvertAttributesToNSDictionary(attributes));
+            }
+            else
+            {
+                Console.WriteLine("Attributes are empty or null.");
+            }
+        }
+
+        public Foundation.NSMutableDictionary ConvertAttributesToNSDictionary(Dictionary<string, object> attributes)
+        {
+            Foundation.NSMutableDictionary NSDict = new Foundation.NSMutableDictionary();
+            foreach (KeyValuePair<string, object> entry in attributes)
+            {
+                NSDict.Add(Foundation.NSObject.FromObject(entry.Key), Foundation.NSObject.FromObject(entry.Value));
+            }
+            return NSDict;
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
 
     }
