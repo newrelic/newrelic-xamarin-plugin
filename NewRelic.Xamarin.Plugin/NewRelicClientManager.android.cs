@@ -526,6 +526,10 @@ namespace NewRelic.Xamarin.Plugin
             throw new NotImplementedException();
         }
 
+        public void RecordException(Exception exception, Dictionary<string, object> attributes)
+        {
+            NRAndroidAgent.RecordHandledException(NewRelicXamarinException.Create(exception), ConvertAttributesToJavaObjects(attributes));
 
+        }
     }
 }
