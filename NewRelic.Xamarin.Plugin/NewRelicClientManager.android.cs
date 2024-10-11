@@ -140,7 +140,7 @@ namespace NewRelic.Xamarin.Plugin
             }
 
             var newRelic = NRAndroidAgent.WithApplicationToken(applicationToken)
-                .WithApplicationFramework(Com.Newrelic.Agent.Android.ApplicationFramework.Xamarin, "1.0.0")
+                .WithApplicationFramework(Com.Newrelic.Agent.Android.ApplicationFramework.Xamarin, "1.0.1")
                 .WithLoggingEnabled(agentConfig.loggingEnabled)
                 .WithLogLevel(logLevelDict[agentConfig.logLevel]);
 

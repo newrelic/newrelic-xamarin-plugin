@@ -74,7 +74,7 @@ namespace NewRelic.Xamarin.Plugin
 
             NRIosAgent.EnableCrashReporting(agentConfig.crashReportingEnabled);
             NRIosAgent.SetPlatform(NewRelicXamarinIOS.NRMAApplicationPlatform.Xamarin);
-            NRIosAgent.SetPlatformVersion("1.0.0");
+            NRIosAgent.SetPlatformVersion("1.0.1");
 
             if (agentConfig.fedRampEnabled)
             {

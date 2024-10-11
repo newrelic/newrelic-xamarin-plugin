@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>NewRelic.Xamarin.iOS.Binding</id>
-    <version>7.5.0</version>
+    <version>7.5.2</version>
     <authors>New Relic</authors>
     <owners>New Relic</owners>
     <projectUrl>https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobile-ios/get-started/introduction-new-relic-mobile-ios</projectUrl>

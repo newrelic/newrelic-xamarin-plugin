@@ -54,12 +54,12 @@
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
 	</ItemGroup>
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
-		<PackageReference Include="NewRelic.Xamarin.Android.Binding" Version="7.5.0" />
+		<PackageReference Include="NewRelic.Xamarin.Android.Binding" Version="7.6.1" />
 		<Compile Include="**\*.android.cs" />
 		<Compile Include="**\*.android.*.cs" />
 	</ItemGroup>
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
-		<PackageReference Include="NewRelic.Xamarin.iOS.Binding" Version="7.5.0" />
+		<PackageReference Include="NewRelic.Xamarin.iOS.Binding" Version="7.5.2" />
 		<Compile Include="**\*.apple.cs" />
 		<Compile Include="**\*.apple.*.cs" />
 	</ItemGroup>
