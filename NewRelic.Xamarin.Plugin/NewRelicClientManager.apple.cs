@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
+using static CoreFoundation.DispatchQueue;
 
 namespace NewRelic.Xamarin.Plugin
 {
@@ -73,7 +74,7 @@ namespace NewRelic.Xamarin.Plugin
 
             NRIosAgent.EnableCrashReporting(agentConfig.crashReportingEnabled);
             NRIosAgent.SetPlatform(NewRelicXamarinIOS.NRMAApplicationPlatform.Xamarin);
-            NRIosAgent.SetPlatformVersion("1.0.0");
+            NRIosAgent.SetPlatformVersion("1.0.1");
 
             if (agentConfig.fedRampEnabled)
             {
@@ -332,24 +333,9 @@ namespace NewRelic.Xamarin.Plugin
         }
 
         public void RecordException(Exception exception)
+
         {
-
-            List<StackFrame> stackFrames = StackTraceParser.Parse(exception.StackTrace).ToList();
-            var _stackFramesArray = new NSMutableArray();
-            foreach (StackFrame length in stackFrames)
-            {
-                var stackFrameKeys = new object[] { "file", "line", "method", "class" };
-                var stackFrameObjects = new object[] { length.FileName, length.LineNumber, length.MethodName, length.ClassName };
-                NSDictionary dictionary = NSDictionary.FromObjectsAndKeys(stackFrameObjects, stackFrameKeys);
-                _stackFramesArray.Add(dictionary);
-            }
-
-            var errorKeys = new object[] { "name", "reason", "cause", "fatal", "stackTraceElements" };
-            var errorObjects = new object[] { exception.Message, exception.Message, exception.Message, false, _stackFramesArray };
-            NSDictionary NSDict = NSDictionary.FromObjectsAndKeys(errorObjects, errorKeys);
-
-
-            NRIosAgent.RecordHandledExceptionWithStackTrace(NSDict);
+            RecordException(exception, new Dictionary<string, object>());
         }
 
         public void HandleUncaughtException(bool shouldThrowFormattedException = true)
@@ -367,7 +353,6 @@ namespace NewRelic.Xamarin.Plugin
                     }
                 };
             }
-
         }
 
         public void TrackShellNavigatedEvents()
@@ -512,6 +497,26 @@ namespace NewRelic.Xamarin.Plugin
             throw new NotImplementedException();
         }
 
+        public void RecordException(Exception exception, Dictionary<string, object> attributes)
+        {
+            List<StackFrame> stackFrames = StackTraceParser.Parse(exception.StackTrace).ToList();
+            var _stackFramesArray = new NSMutableArray();
+            foreach (StackFrame length in stackFrames)
+            {
+                var stackFrameKeys = new object[] { "file", "line", "method", "class" };
+                var stackFrameObjects = new object[] { length.FileName, length.LineNumber, length.MethodName, length.ClassName };
+                NSDictionary dictionary = NSDictionary.FromObjectsAndKeys(stackFrameObjects, stackFrameKeys);
+                _stackFramesArray.Add(dictionary);
+            }
+
+            var errorKeys = new object[] { "name", "reason", "cause", "fatal", "stackTraceElements","attributes"};
+
+            var errorObjects = new object[] { exception.Message, exception.Message, exception.Message, false, _stackFramesArray, ConvertAttributesToNSDictionary(attributes)};
+            NSDictionary NSDict = NSDictionary.FromObjectsAndKeys(errorObjects, errorKeys);
+
+
+            NRIosAgent.RecordHandledExceptionWithStackTrace(NSDict);
+        }
     }
 }
 
