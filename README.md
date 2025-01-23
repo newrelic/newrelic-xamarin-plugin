@@ -1,3 +1,11 @@
+## Notice
+Deprecation and end of support for NewRelic Xamarin NuGet package
+On May 1, 2024, Microsoft will end support for all Xamarin SDKs﻿. For this reason, we're deprecating the NewRelic Xamarin NuGet package in July 2024. We will let you know in which upcoming package version we will be only fixing bugs and addressing important security issues.
+
+Also, in accordance with the NewRelic Support Policy﻿, we will end support for the NewRelic Xamarin NuGet package in July 2025.
+
+We recommend that you upgrade your Xamarin projects to .NET﻿ and use the NewRelic .NET MAUI NuGet package instead of the deprecated Xamarin NuGet package.
+
 <a href="https://opensource.newrelic.com/oss-category/#community-plus"><picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/newrelic/opensource-website/raw/main/src/images/categories/dark/Community_Plus.png"><source media="(prefers-color-scheme: light)" srcset="https://github.com/newrelic/opensource-website/raw/main/src/images/categories/Community_Plus.png"><img alt="New Relic Open Source community plus project banner." src="https://github.com/newrelic/opensource-website/raw/main/src/images/categories/Community_Plus.png"></picture></a>
 
 [![nuget](https://img.shields.io/nuget/v/NewRelic.Xamarin.Plugin)](https://www.nuget.org/packages/NewRelic.Xamarin.Plugin)
